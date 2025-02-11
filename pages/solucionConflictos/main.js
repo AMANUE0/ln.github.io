@@ -89,6 +89,7 @@ function calificarExamen() {
     document.body.appendChild(resultado);
     if (puntaje === 115) {
         let cien = document.createElement("img");
+        cien.classList.add("revolucion-industrial");
         cien.src = "../../imagenes/revolucion.webp"
         
         resultado.appendChild(cien)
