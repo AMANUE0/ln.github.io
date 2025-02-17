@@ -85,9 +85,9 @@ function calificarExamen() {
     });
     const resultado = document.createElement("div");
     resultado.classList.add("resultado");
-    resultado.textContent = `Tu calificación es: ${puntaje} / 99`;
+    resultado.textContent = `Tu calificación es: ${puntaje} / 112`;
     document.body.appendChild(resultado);
-    if (puntaje === 99) {
+    if (puntaje === 112) {
         let cien = document.createElement("img");
         cien.classList.add("revolucion-industrial");
         cien.src = "../../imagenes/revolucion.webp"
