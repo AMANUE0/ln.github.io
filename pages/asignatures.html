@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/6788e71a64.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
     <title>LN | Asignaturas</title>
     <style>
         /* Diseño general */
@@ -13,8 +16,68 @@
             padding: 0;
             color: #333; /* Texto oscuro */
         }
+        header {
+            background-color: #1f1e1e;
+            color: white;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        header > section {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+        }
+        .menu {
+            background-color: transparent;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .logo {
+            margin: 0 10px;
+        }
+        .nav-content {
+        }
+        .hidden-menu {
+            display: none;
+        }
+        .nav-bar {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+            width: 100%;
+        }
+        .nav-bar > li {
+        
+        }
+        .nav-item {
+            display: flex;
+            text-decoration: none;
+            color: #7a7a7a;
+            transition: .5s;
+            font-weight: bold;
+            padding: 10px;
+            width: 100%;
+        
+        }
+        .nav-item:hover {
+            cursor: pointer;
+            color: #666464;
+        }
+        .content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-        .volver {
+        .back {
             display: block;
             text-align: center;
             padding: 15px;
@@ -22,10 +85,9 @@
             color: white;
             font-weight: bold;
             text-decoration: none;
-            margin-top: 30px;
         }
 
-        .volver:hover {
+        .back:hover {
             background-color: #555;
         }
 
@@ -41,17 +103,15 @@
 
         .content-asignatura {
             background-color: #fff;
-            border-radius: 10px;
+            border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 280px;
-            text-align: center;
-            padding: 20px;
+            width: 330px;
             position: relative; /* Necesario para usar position: absolute en los elementos internos */
             transition: transform 0.3s ease-in-out;
         }
 
         .content-asignatura:hover {
-            transform: scale(1.05);
+            transform: translateY(-8px);
         }
 
         /* Imagen dentro de la tarjeta */
@@ -59,71 +119,109 @@
             width: 100%;
             height: 200px; /* Tamaño fijo */
             object-fit: cover;
-            border-radius: 8px;
             margin-bottom: 20px;
+            margin: 0;
+            border-radius: 5px 5px 0 0;
         }
-
+        .cancelado {
+            color: red;
+            padding: 10px;
+            border: 4px red solid;
+            border-radius: 10px;
+            position: absolute;
+            z-index: 10;
+            top: 44%;
+            left: 32%;
+            transform: scale(3.1) rotate(-45deg);
+            font-weight: bold;
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+            margin: 0 5px;
+            height: 120px;
+            gap: 10px;
+        }
+        .start {
+            background-color: #222;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+            width: 100px;
+            padding: 10px;
+            text-align: center;
+            margin: 0;
+        }
         /* Títulos de asignaturas */
         h3 {
             color: #333;
             font-size: 20px;
-            margin: 10px 0;
+            margin: 0;
         }
 
         p {
             color: #777;
             font-size: 14px;
         }
-
-        .start {
-            background-color: #222;
-            color: white;
-            font-weight: bold;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            display: inline-block;
-            margin-top: 15px;
+        .tags {
+            display: flex;
+            width: 100%;
+            gap: 5px;
         }
+        .tag {
+            background-color: #d8d8d8;
+            padding: 2PX;
+            width: 80px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
 
         .start:hover {
             background-color: #444;
         }
+        .terminado {
+            pointer-events: none;
+            background-color: #979797;
+        }
+        .terminado:hover {
+            background-color: #979797;
+        }
 
         /* Animación para el texto */
         .desarrollo {
+            display: block;
+            animation:  1.5s;
+            position: relative;
+            overflow: hidden;
+        }
+        .desarrollo:hover::after {
+            content: '';
+            display: block;
             position: absolute;
-            top: -20px; /* Hace que el texto esté parcialmente fuera de la tarjeta */
-            left: 50%;
-            transform: translateX(-50%) rotate(-5deg); /* Centrado y rotado */
-            font-size: 18px;
-            font-weight: bold;
-            color: #0066ff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra ligera */
-            border: 2px solid #0066ff; /* Borde azul */
-            padding: 5px 10px;
-            border-radius: 5px;
-            animation: cambiarColor 2s ease-in-out infinite, cambiarTamaño 2s ease-in-out infinite;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transform: skew(30deg);
+            background-color: rgb(202, 201, 201);
+            animation: desarrollo .5s forwards;
         }
 
         /* Animación de cambio de color */
-        @keyframes cambiarColor {
+        @keyframes desarrollo {
             0% {
-                color: #0066ff; /* Azul inicial */
-                border-color: #0066ff;
-            }
-            50% {
-                color: #ff6347; /* Naranja */
-                border-color: #ff6347;
+                left: -100%;
             }
             100% {
-                color: #0066ff; /* Azul final */
-                border-color: #0066ff;
+                left: 110%;
             }
         }
 
         /* Animación de cambio de tamaño */
-        @keyframes cambiarTamaño {
+        @keyframes listo {
             0% {
                 font-size: 18px;
             }
@@ -134,92 +232,139 @@
                 font-size: 18px;
             }
         }
+        @media only screen and (min-width: 800px) {
+            .menu {display: none;}
+            header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .nav-content {
+                display: flex;
+            }
+        }
+        @media only screen and (max-width: 800px) {
+            header {
+            }
+            .nav-bar {
+                flex-direction: column;
+            }
+            .nav-item {
+            }
+        }     
+        .examen {
+            text-align: center;
+            padding: 10px;
+            background-color: #d4d4d4;
+            margin: 0 auto;
+        }
+
     </style>
 </head>
 <body>
-    <a href="../index.html" class="volver">Volver</a>
+    <header>
+        <section>
+            <h1 class="logo">LN</h1>
+            <button class="menu"><i class="fa-solid fa-bars"></i></button>
+        </section>
 
+        <nav class="nav-content hidden-menu">
+            <ul class="nav-bar">
+                <li><a class="nav-item" href="../index.html">Inicio</a></li>
+                <li><a class="nav-item" href="./recursos.html" >Recursos</a></li>
+                <li><a class="nav-item" href="./proximamente.html">Actualizaciones</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h2 class="examen">Primer parcial</h2>
     <main class="content">
+
+        <section class="content-asignatura">
+            <img src="../imagenes/biology.webp" alt="Asignatura">
+            <div class="info">
+                <h3>Biologia en la Salud</h3>
+                <a href="#" class="start desarrollo">Contestar</a>
+                <div class="tags">
+                    <strong class="tag">General</strong>
+                    <strong class="tag">33 R</strong>
+                </div>
+            </div>
+        </section>
+        <section class="content-asignatura">
+            <img src="../imagenes/fisica.avif" alt="Asignatura">
+            <div class="info">
+                <h3>La Ciencia del Movimiento</h3>
+                <a href="#" class="start desarrollo">Desarrollo...</a>
+                <div class="tags">
+                    <strong class="tag">General</strong>
+                    <strong class="tag">00 R</strong>
+                </div>
+            </div>
+        </section>
+
         <!-- Tarjeta de Asignatura 1 -->
         <section class="content-asignatura">
-            <div class="desarrollo">Examen de hoy</div> <!-- Agregado el texto animado -->
             <img src="../imagenes/visual-studio.png" alt="Asignatura">
-            <h3>Examen con 40 reactivos.</h3>
-            <p>Entrar</p>
-            <a href="./desarrolloVisual/index.html" class="start">Entrar</a>
+            <div class="info">
+                <h3>Desarrollo Visual I</h3>
+                <a href="#" class="start terminado">Terminado</a>
+                <div class="tags">
+                    <strong class="tag">Tecnica</strong>
+                    <strong class="tag">40 R</strong>
+                </div>
+            </div>
         </section>
 
-        <!-- Tarjeta de Asignatura 2 -->
         <section class="content-asignatura">
             <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>Solu. Conflictos</h3>
-            <p>Examen simulacro con 23 reactivos.</p>
-            <a href="./solucionConflictos/solucion-conflictos.html" class="start">Entrar</a>
+            <div class="info">
+                <h3>Solu. Conflictos</h3>
+                <a href="#" class="start terminado">Terminado</a>
+                <div class="tags">
+                    <strong class="tag">General</strong>
+                    <strong class="tag">23 R</strong>
+                </div>
+            </div>
+        </section>
+        <!---->
+        <section class="content-asignatura">
+            <img src="../imagenes/background-img.png" alt="Asignatura">
+            <div class="info">
+                <h3>MCMOL</h3>
+                <a href="#" class="start terminado">Terminado</a>
+                <div class="tags">
+                    <strong class="tag">General</strong>
+                    <strong class="tag">50 R</strong>
+                </div>
+            </div>
+        </section>
+        <!--CANCELADOS-->
+        <section class="content-asignatura">
+            <img src="../imagenes/background-img.png" alt="Asignatura">
+            <div class="info">
+                <h3>Robotica</h3>
+                <a href="#" class="start terminado">Cacelado</a>
+                <div class="tags">
+                    <strong class="tag">Cancelado</strong>
+                    <strong class="tag">Cancelado</strong>
+                </div>
+            </div>
+            <span class="cancelado">CANCELADO</span>
         </section>
 
-        <!-- Tarjeta de Asignatura 3 -->
         <section class="content-asignatura">
             <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>MCMOL</h3>
-            <p>Examen simulacro con 50 preguntas</p>
-            <a href="../pages/mcmol/mcmol.html" class="start">Entrar</a>
-        </section>
-
-        <!-- Tarjeta de Asignatura 4 -->
-        <section class="content-asignatura">
-            <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>Filosofía</h3>
-            <p>En desarrollo...</p>
-            <a href="#" class="start">En desarrollo...</a>
-        </section>
-
-        <!-- Tarjeta de Asignatura 5 -->
-        <section class="content-asignatura">
-            <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>Probabilidad y Estadística</h3>
-            <p>En desarrollo...</p>
-            <a href="#" class="start">En desarrollo...</a>
-        </section>
-
-        <!-- Tarjeta de Asignatura 6 -->
-        <section class="content-asignatura">
-            <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>La Ciencia del Movimiento</h3>
-            <p>En desarrollo...</p>
-            <a href="#" class="start">En desarrollo...</a>
-        </section>
-
-        <!-- Tarjeta de Asignatura 7 -->
-        <section class="content-asignatura">
-            <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>Robótica</h3>
-            <p>En desarrollo...</p>
-            <a href="#" class="start">En desarrollo...</a>
-        </section>
-
-        <!-- Tarjeta de Asignatura 8 -->
-        <section class="content-asignatura">
-            <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>Biología</h3>
-            <p>En desarrollo...</p>
-            <a href="#" class="start">En desarrollo...</a>
-        </section>
-
-        <!-- Tarjeta de Asignatura 9 -->
-        <section class="content-asignatura">
-            <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>Base de Datos I</h3>
-            <p>En desarrollo...</p>
-            <a href="#" class="start">En desarrollo...</a>
-        </section>
-
-        <!-- Tarjeta de Asignatura 10 -->
-        <section class="content-asignatura">
-            <img src="../imagenes/background-img.png" alt="Asignatura">
-            <h3>Desarrollo Web I</h3>
-            <p>En desarrollo...</p>
-            <a href="#" class="start">En desarrollo...</a>
+            <div class="info">
+                <h3>Probabilidad y estadistica</h3>
+                <a href="#" class="start terminado">Cacelado</a>
+                <div class="tags">
+                    <strong class="tag">Cancelado</strong>
+                    <strong class="tag">Cancelado</strong>
+                </div>
+            </div>
+            <span class="cancelado">CANCELADO</span>
         </section>
     </main>
+    <script src="../main.js"></script>
 </body>
 </html>

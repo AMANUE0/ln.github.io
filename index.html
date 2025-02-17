@@ -6,6 +6,7 @@
     <!--GOOGLE FONTS-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/6788e71a64.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <!------------->
     <link rel="stylesheet" href="./main.css">
@@ -13,8 +14,12 @@
 </head>
 <body class="">
     <header>
-        <h1 class="logo">LN</h1>
-        <nav>
+        <section>
+            <h1 class="logo">LN</h1>
+            <button class="menu"><i class="fa-solid fa-bars"></i></button>
+        </section>
+
+        <nav class="nav-content hidden-menu">
             <ul class="nav-bar">
                 <li><a class="nav-item" href="./pages/asignatures.html">Asignaturas</a></li>
                 <li><a class="nav-item" href="./pages/recursos.html" >Recursos</a></li>
@@ -32,9 +37,10 @@
                 <h1 class="hero-h1">Prepárate para mejorar tus exámenes con los mejores recursos</h1>
                 <p class="hero-p">Encuentra guías de estudio, exámenes simulados y recursos exclusivos para mejorar tus habilidades académicas.</p>
             </div>
-            <div>
-                <a href="./pages/asignatures.html">Comenzar</a>
-                <a href="./pages/proximamente.html">Mas información</a>
+            <div class="content-btns-hero">
+                <a class="btn-hero" href="./pages/asignatures.html">Comenzar</a>
+                <a class="btn-hero btn-info" href="./pages/proximamente.html">Mas información</a>
+                <button class="btn-hero btn-theme"><i class="fa-solid fa-moon"></i></button>
             </div>
         </section>
         <section class="introduction-page">
@@ -65,9 +71,42 @@
                 <p>Esta sección esta centrada a realizar exámenes simulacros días antes del examen. Son exámenes hechos 100% del libro por lo cual será un 90% efectivo a la hora de realizar el exámen real.</p>
             </article>
         </section>
+        <h3 class="team-h3">Conoce nuestro equipo</h3>
+        <section class="credits">
+            <article class="integrante">
+                <img src="./imagenes/alan.enc" alt="Imagen del Diseñador Grafico" class="img-team">
+                <h3 class="rama">Diseñador Grafico</h2>
+                <p class="nombre-teams">Alan Salazar Bautista</p>
+                <p class="sobre-team"></p> <!--Diseñador grafico . Que hace?-->
+                <div class="redes">
+                    <a href="https://www.instagram.com/alansalazar606?igsh=MTRsejF6bDlubmM1aQ==" class="red-social ig"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://youtube.com/@all-blackthogether?si=OY48MO_KVInjekN5" class="red-social yt"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </article>
+            <article class="integrante">
+                <img src="./imagenes/LinceNexus.png" alt="Imagen del Diseñador Grafico" class="img-team">
+                <h3 class="rama">Administrador de contenido</h3>
+                <p class="nombre-teams">Mario Alfonso Ascasio Valdes</p>
+                <p class="sobre-team"></p> <!--Diseñador grafico . Que hace?-->
+                <div class="redes">
+                    <a href="https://www.instagram.com/menor.vdz?igsh=azZveDVxYWU4eHRj" class="red-social ig"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                
+            </article>
+            <article class="integrante">
+                <img src="./imagenes/manuel.png" alt="Imagen del Diseñador Grafico" class="img-team">
+                <h3 class="rama">Desarrollador Frontend</h3>
+                <p class="nombre-teams">Manuel Balderas</p>
+                <p class="sobre-team"></p> <!--Diseñador grafico . Que hace?-->
+                <div class="redes">
+                    <a href="https://www.instagram.com/elbalderass?igsh=MmJxbml1dXIwbHFy" class="red-social ig"><i class="fa-brands fa-instagram"></i></a>
+                    <!--<a href="" class="red-social dc"><i class="fa-brands fa-discord"></i></a>-->
+                </div>
+            </article>
+        </section>
+        
     </main>
     <footer>
-        <h3>Manuel Balderas <span>2202491</span></h3>
         <p>Gracias por visitar esta página web</p>
         <p>Mucha suerte!</p>
     </footer>

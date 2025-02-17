@@ -4,16 +4,16 @@
     --color: #333333;
     --bg-1: white;
     --bg-2: #E0E0E0;
-    --bg-3: blue;
+    --bg-3: #d4d4d4;
     --bg-4: black;
     --font: inter GOOGLE;
 }
 
 .dark-mode {
     --color: white;
-    --bg-1: black;
-    --bg-2: red;
-    --bg-3: blue;
+    --bg-1: #1f1e1e;
+    --bg-2: #333232;
+    --bg-3: #3b3b3b;
     --bg-4: black;
     
 }
@@ -28,37 +28,63 @@ body {
     color: var(--color);
     font-family: var(--font);
     margin: 0;
+    transition: background .5s, color .5s;
+}
+html, body {
+    overflow-x: hidden;
 }
 p {
-    color: #888888;
+    color: #a5a4a4;
     font-weight: bold;
 }
 header {
     background-color: var(--bg-2);
     color: var(--color);
-    display: flex;
-    align-items: center;
-    gap: 30px;
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+header > section {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+.menu {
+    background-color: transparent;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
 }
 .logo {
     margin: 0 10px;
 }
+.nav-content {
+}
+.hidden-menu {
+    display: none;
+}
 .nav-bar {
     display: flex;
-    flex-wrap: wrap;
-
-    gap: 30px;
+    gap: 4px;
     list-style: none;
+    width: 100%;
+}
+.nav-bar > li {
+
 }
 .nav-item {
+    display: flex;
     text-decoration: none;
-    color: #888888;
+    color: #7a7a7a;
     transition: .5s;
     font-weight: bold;
+    padding: 10px;
+    width: 100%;
 
 }
 .nav-item:hover {
@@ -89,8 +115,7 @@ header {
     font-size: 1.2rem;
 }
 
-.hero > div:last-child {
-    background-color: white;
+.content-btns-hero {
     height: 100px;
     display: flex;
     align-items: center;
@@ -101,7 +126,7 @@ header {
     font-size: 2.5rem;
 }
 
-.hero > div > a {
+.btn-hero {
     padding: 10px 20px;
     color: white;
     text-decoration: none;
@@ -109,15 +134,15 @@ header {
     box-shadow: 0 1px 3px black;
     background-color: #222222;
     transition: .5s ease;
+    border: none;
 }
 
-.hero > div > a:last-child {
+.btn-info {
     color: black;
     background-color: #EBEBEB;
 }
-.hero > div > a:hover {
+.btn-hero:hover {
     transform: scale(1.1);
-
 }
 
 /*-------------------*/
@@ -168,7 +193,6 @@ header {
     flex-direction: column;
     gap: 10px;
 }
-
 .section-exams {
     width: 500px;
     margin: 50px 0;
@@ -230,6 +254,134 @@ header {
     background-size: cover;
     border-radius: 15px;
 }
+/*-----TEAMS-----*//*----- TEAMS -----*/
+.credits {
+    background-color: var(--bg-2);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.integrante {
+    width: 220px;
+    background-color: var(--bg-3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: flotar 1s ease-in-out infinite alternate;
+
+}
+
+.integrante:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    animation: flotar 1s ease-in-out infinite alternate;
+
+}
+
+@keyframes flotar {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+.img-team {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-2);
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.nombre {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.rol {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+/* Redes sociales */
+.redes {
+    margin: 10px auto;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.red-social {
+    font-size: 1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out, opacity 0.3s;
+    text-decoration: none;
+}
+
+.red-social:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Colores específicos */
+.ig { color: #E4405F; }
+.dc { color: #5865F2; }
+.yt { color: #FF0000; }
+
+
+/* Instagram - Degradado */
+.ig {
+    background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+    color: white;
+}
+
+.ig:hover {
+    transform: scale(1.1);
+}
+
+/* Discord - Azul */
+.dc {
+    background-color: #5865F2;
+    color: white;
+}
+
+.dc:hover {
+    transform: scale(1.1);
+}
+
+/* YouTube - Rojo */
+.yt {
+    background-color: #FF0000;
+    color: white;
+}
+
+.yt:hover {
+    transform: scale(1.1);
+}
+.team-h3 {
+    text-align: center;
+    background-color: var(--bg-2);
+    padding: 10px;
+}
 /*----------*/
 footer {
     width: 100%;
@@ -243,22 +395,37 @@ footer {
 footer > h3 {
     font-size: 2.5rem;
     margin: 20px auto;
+    text-align: center;
 }
 @font-face {
     font-family: "inter GOOGLE";
     src: url('./fonts/inter/Inter-VariableFont_opsz\,wght.ttf');
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (min-width: 800px) {
+    body {
+    }
+    .menu {display: none;}
     header {
-        display: flex;
+        flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
+    }
+    .nav-content {
+        display: flex;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .content-btns-hero {
         flex-direction: column;
-        padding: 20px 0;
-        text-align: center;
+        margin: 15px 0;
+    }
+    header {
     }
     .nav-bar {
         flex-direction: column;
+    }
+    .nav-item {
+        background-color: var(--bg-3);
     }
     .hero-h1 {
         transform: scale(.45);
