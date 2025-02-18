@@ -413,7 +413,7 @@ footer > h3 {
     border: 2px solid white;
     transform: scale(.9);
     padding: 2px;
-    animation: osu .5s infinite;
+    animation: osu .2s infinite;
     position: absolute;
     top: 0;
     left: 0;
