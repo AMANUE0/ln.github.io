@@ -3,199 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preguntas y Respuestas - Emprendimiento</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Examen Filosofía - Kahoot Style</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, #A2D9CE 0%, #D5DBDB 100%);
+            color: #333;
+            text-align: center;
+        }
+        ::-webkit-scrollbar {
+            width: 2px;
+        }
+        h1 {
+            color: #2E4053;
+            font-size: 3em;
+            margin-top: 20px;
+        }
+        .pregunta {
+            margin: 2px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 3px;
+            width: 80%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .pregunta:hover {
+            transform: scale(1.02);
+        }
+        .opciones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .opcion {
+            padding: 20px;
+            background-color: #eaebec;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .opcion:hover {
+            background-color: #D5DBDB;
+            transform: scale(1.05);
+        }
+        .seleccionada {
+            background-color: #cac9c9 !important;
+        }
+        .correcta {
+            background-color: #58D68D !important;
+        }
+        .incorrecta {
+            background-color: #F1948A !important;
+        }
+        #resultado {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .waves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: url('https://www.transparenttextures.com/patterns/wavy-lines.png') repeat-x;
+            animation: wave 15s linear infinite;
+        }
+        @keyframes wave {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            display: none;
+        }
+        .confetti div {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #FFCC00;
+            animation: confetti 1.5s ease-in-out infinite;
+        }
+        @keyframes confetti {
+            0% {
+                transform: translateY(-100vh) rotate(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
-<body><a class="back" href="../asignatures.html">Regresar</a>
+<body>
+    <div class="waves"></div>
+    <h1>Examen de Filosofía</h1>
+    <div id="examen"></div>
+    <button onclick="calificar()">Calificar</button>
+    <h2 id="resultado"></h2>
+    <div class="confetti" id="confetti"></div>
 
-    <div class="container">
-        <header>
-            <h1>Preguntas sobre Emprendimiento</h1>
-        </header>
+    <script>
+        const preguntas = [
+            { pregunta: "Heraclito establecia que el ser es unico e inmutable", opciones: ["Verdadero", "Falso"], respuesta: "Falso" },
+            { pregunta: "El periodo antropologico se enfoco en el estudio de la naturaleza y el origen del cosmos.", opciones: ["Verdadero", "Falso"], respuesta: "Falso" },
+            { pregunta: "¿La palabra filosofia proviene del vocablo griego 'philos' que significa amor y 'sophia' que significa sabiduria?", opciones: ["Verdadero", "Falso"], respuesta: "Verdadero" },
+            { pregunta: "La ciencia tiene como objetivo la busqueda de la verdad, utilizando el metodo cientifico", opciones: ["Verdadero", "Falso"], respuesta: "Verdadero" },
+            { pregunta: "Heraclito fue el filosofo que planteaba que la realidad nace de la lucha de los contrarios.", opciones: ["Verdadero", "Falso"], respuesta: "Verdadero" },
+            { pregunta: "En el periodo cosmologico los pensadores griegos se enfocaron en entender la naturaleza y el origen del cosmos.", opciones: ["Verdadero", "Falso"], respuesta: "Verdadero" },
+            { pregunta: "La cosmologia estudia la realidad fisica y su relacion con el hombre y sus pensamiento.", opciones: ["Verdadero", "Falso"], respuesta: "Falso" },
+            { pregunta: "Socrates fue considerado el padre de la filosofia.", opciones: ["Verdadero", "Falso"], respuesta: "Verdadero" },
+            { pregunta: "Conjunto de saberes, creencias y pautas de conducta de un grupo social.", opciones: ["Cultura", "Religion", "Filosofia", "Logica"], respuesta: "Cultura" },
+            { pregunta: "Estado de la mente en el que un individuo da por cierto algo sin poseer evidencia de ello.", opciones: ["Creencia", "Ciencia", "Dogma", "Mito"], respuesta: "Creencia" },
+            { pregunta: "Se refiere a eventos que no pueden ser explicados por la experiencia del hombre.", opciones: ["Mito", "Hecho", "Filosofia", "Cultura"], respuesta: "Mito" },
+            { pregunta: "Sistema solidario de creencias y practicas que unen una misma comunidad moral.", opciones: ["Religion", "Logica", "Ciencia", "Ontologia"], respuesta: "Religion" },
+            { pregunta: "Conjunto de ideas y planteamientos que pretenden explicar la realidad mediante el pensamiento logico y argumentado.", opciones: ["Filosofia", "Cultura", "Creencia", "Mito"], respuesta: "Filosofia" },
+            { pregunta: "Menciona 3 ramas de estudio de la filosofia.", opciones: ["Ontologia, Estetica y Cosmologia", "Ciencia, Cultura y Logica", "Mito, Dogma y Creencia", "Antropologia, Fisica y Biologia"], respuesta: "Ontologia, Estetica y Cosmologia" },
+            { pregunta: "Periodos en que se clasifica la filosofia griega.", opciones: ["Cosmologico o presocratico, Antropologico", "Moderno y Contemporaneo", "Racionalista y Empirista", "Naturalista y Sofista"], respuesta: "Cosmologico o presocratico, Antropologico" },
+            { pregunta: "Forma de pensar y razonar basada en supuestos informales, erroneos o no justificados.", opciones: ["Pensamiento magico", "Logica", "Metafisica", "Dogmatismo"], respuesta: "Pensamiento magico" },
+            { pregunta: "Estudia la forma correcta de pensar.", opciones: ["Logica", "Ciencia", "Creencia", "Mito"], respuesta: "Logica" },
+            { pregunta: "Estudia el concepto del 'ser' de forma abstracta.", opciones: ["Ontologia", "Etica", "Epistemologia", "Logica"], respuesta: "Ontologia" },
+            { pregunta: "Periodo en el que se dedico a las reflexiones del quehacer humano, justicia, vivir bien y actuar bien.", opciones: ["Antropologico", "Cosmologico", "Empirista", "Naturalista"], respuesta: "Antropologico" },
+            { pregunta: "Filosofo del periodo cosmologico que considero al agua como arje, porque ningun ser vivo puede vivir sin ella.", opciones: ["Tales de Mileto", "Socrates", "Platon", "Aristoteles"], respuesta: "Tales de Mileto" },
+            { pregunta: "Filosofo del periodo cosmologico que concibe al aire como el arje, el aliento del mundo, su fuente eterna y divina.", opciones: ["Anaximenes", "Heraclito", "Empedocles", "Parménides"], respuesta: "Anaximenes" },
+            { pregunta: "Escuela filosofica que establece que particulas diminutas son las creadoras del cosmos y lo que percibimos.", opciones: ["Escuela Atomista", "Escuela Sofista", "Escuela Platonica", "Escuela Aristotelica"], respuesta: "Escuela Atomista" },
+            { pregunta: "Filosofo del periodo antropologico que establece que el mundo real es el de las realidades inteligibles a las que llamo ideas.", opciones: ["Platon", "Socrates", "Aristoteles", "Tales de Mileto"], respuesta: "Platon" },
+            { pregunta: "Filosofo que establecio que todo lo material esta formado por la mezcla y separacion de los 4 elementos.", opciones: ["Empedocles", "Heraclito", "Anaxagoras", "Platon"], respuesta: "Empedocles" },
+            { pregunta: "Filosofo que escribio el Mito de la Caverna en donde explica porque el mundo de las ideas permite entender el mundo real.", opciones: ["Platon", "Socrates", "Aristoteles", "Parmenides"], respuesta: "Platon" }
+        ];
 
-        <section class="questions">
-            <!-- Pregunta 1 -->
-            <div class="question">
-                <p class="definition">¿Qué es la filosofía del emprendedor?</p>
-                <ul class="answers">
-                    <li>Es el conjunto de características que te permiten desarrollar cualidades extraordinarias.</li>
-                </ul>
-            </div>
+        let respuestasUsuario = [];
 
-            <!-- Pregunta 2 -->
-            <div class="question">
-                <p class="definition">¿Qué es un emprendedor?</p>
-                <ul class="answers">
-                    <li>Es un individuo que tiene la virtud de descubrir cómo, cuándo, y dónde se presentan las posibilidades de desarrollar ideas de negocios.</li>
-                </ul>
-            </div>
+        function crearExamen() {
+            const contenedor = document.getElementById("examen");
+            preguntas.forEach((q, index) => {
+                let div = document.createElement("div");
+                div.classList.add("pregunta");
+                div.innerHTML = `<h2>${q.pregunta}</h2>`;
+                let opcionesDiv = document.createElement("div");
+                opcionesDiv.classList.add("opciones");
+                q.opciones.forEach(opcion => {
+                    let btn = document.createElement("div");
+                    btn.classList.add("opcion");
+                    btn.textContent = opcion;
+                    btn.onclick = () => seleccionarRespuesta(index, opcion, btn, opcionesDiv);
+                    opcionesDiv.appendChild(btn);
+                });
+                div.appendChild(opcionesDiv);
+                contenedor.appendChild(div);
+                respuestasUsuario.push(null);
+            });
+        }
 
-            <!-- Pregunta 3 -->
-            <div class="question">
-                <p class="definition">¿Qué es un empresario?</p>
-                <ul class="answers">
-                    <li>Una persona que por concesión o por contrato ejecuta una obra o explota un servicio público. Este debe tener características de emprendedor.</li>
-                    <li>Es aquella persona que, apartir de su espíritu emprendedor e iniciativa, emprende nuevos proyectos o genera ideas en una empresa que no es la suya.</li>
-                    <li>Intrapreneur</li>
-                    <li>Es el individuo que emprende su proyecto en un entorno propio y del cual espera obtener para sí mismo los beneficios del emprendimiento.</li>
-                    <li>Entrepreneur</li>
-                </ul>
-            </div>
+        function seleccionarRespuesta(index, seleccion, btn, opcionesDiv) {
+            respuestasUsuario[index] = seleccion;
+            Array.from(opcionesDiv.children).forEach(opcion => {
+                opcion.classList.remove("seleccionada");
+            });
+            btn.classList.add("seleccionada");
+        }
 
-            <!-- Pregunta 4 -->
-            <div class="question">
-                <p class="definition">Una de las habilidades del emprendedor es ser visionario. Es decir, ser una persona capaz de ver más allá de sus horizontes inmediatos e identificar posibilidades para un rumbo nuevo.</p>
-                <ul class="answers">
-                    <li>Visión emprendedora</li>
-                </ul>
-            </div>
+        function calificar() {
+            let puntaje = 0;
+            document.querySelectorAll(".pregunta").forEach((preguntaDiv, index) => {
+                const opcionesDiv = preguntaDiv.querySelector(".opciones");
+                Array.from(opcionesDiv.children).forEach(opcion => {
+                    if (opcion.textContent === preguntas[index].respuesta) {
+                        opcion.classList.add("correcta");
+                    } else if (opcion.textContent === respuestasUsuario[index]) {
+                        opcion.classList.add("incorrecta");
+                    }
+                });
+                if (respuestasUsuario[index] === preguntas[index].respuesta) {
+                    puntaje += 4;
+                }
+            });
+            document.getElementById("resultado").textContent = `Puntaje final: ${puntaje} puntos`;
 
-            <!-- Pregunta 5 -->
-            <div class="question">
-                <p class="definition">Siempre está buscando dónde hacer negocios; se caracteriza por su poca aversión al riesgo.</p>
-                <ul class="answers">
-                    <li>Visionario</li>
-                </ul>
-            </div>
+            if (puntaje === 100) {
+                mostrarConfeti();
+            }
+        }
 
-            <!-- Pregunta 6 -->
-            <div class="question">
-                <p class="definition">Es aquel que tiene un capital y decide crear una empresa; busca la rentabilidad por encima de todo.</p>
-                <ul class="answers">
-                    <li>Inversionista</li>
-                </ul>
-            </div>
+        function mostrarConfeti() {
+            const confetti = document.getElementById("confetti");
+            confetti.style.display = 'block';
+            for (let i = 0; i < 100; i++) {
+                let confettiPiece = document.createElement('div');
+                confettiPiece.style.left = `${Math.random() * 100}vw`;
+                confettiPiece.style.animationDuration = `${Math.random() * 2 + 2}s`;
+                confetti.appendChild(confettiPiece);
+            }
+        }
 
-            <!-- Pregunta 7 -->
-            <div class="question">
-                <p class="definition">Tiene un perfil más técnico y una visión aguda para detectar donde se están cometiendo errores para mejorar, busca la forma de hacer algo diferente.</p>
-                <ul class="answers">
-                    <li>Especialista</li>
-                </ul>
-            </div>
-
-            <!-- Pregunta 8 -->
-            <div class="question">
-                <p class="definition">Lo caracteriza su capacidad de influir, ya que es capaz de convencer a sus colaboradores y empujarlos hacia el objetivo.</p>
-                <ul class="answers">
-                    <li>Persuasivo</li>
-                </ul>
-            </div>
-
-            <!-- Pregunta 9 -->
-            <div class="question">
-                <p class="definition">Su gran dosis de intuición le hace ir más allá de lo que aparenta ante nuestra visión.</p>
-                <ul class="answers">
-                    <li>Intuitivo</li>
-                </ul>
-            </div>
-
-            <!-- Pregunta 10 -->
-            <div class="question">
-                <p class="definition">Tiene una mente bastante racional y analítica que le permite detectar errores o situaciones donde se hacen las cosas de manera poco práctica, para transformarlas en oportunidades de negocio.</p>
-                <ul class="answers">
-                    <li>Rastreador</li>
-                </ul>
-            </div>
-
-            <!-- Pregunta 11 -->
-            <div class="question">
-                <p class="definition">Posee una gran capacidad de adaptación; sabe aprovechar los contratiempos.</p>
-                <ul class="answers">
-                    <li>Al azar</li>
-                </ul>
-            </div>
-
-            <!-- Pregunta 12 -->
-            <div class="question">
-                <p class="definition">La visión nos debe dar respuesta a la pregunta: ¿Qué queremos crear?</p>
-                <ul class="answers">
-                    <li>¿Qué queremos crear?</li>
-                </ul>
-            </div>
-
-            <!-- Pregunta 13 -->
-            <div class="question">
-                <p class="definition">¿Qué es un proyecto de vida personal?</p>
-                <ul class="answers">
-                    <li>Un proyecto de vida es un plan personal a lo largo o mediano plazo, que se piensa seguir con el paso de los años.</li>
-                </ul>
-            </div>
-
-            <!-- Pregunta 14 -->
-            <div class="question">
-                <p class="definition">¿Cuál es el propósito del proyecto de vida?</p>
-                <ul class="answers">
-                    <li>Se diseña con el fin de cumplir determinados objetivos o metas concretas y se fundamenta en gustos personales, valores o habilidades.</li>
-                </ul>
-            </div>
-
-            <!-- Pregunta 15 -->
-            <div class="question">
-                <p class="definition">¿Qué se puede esperar de ser su propio jefe?</p>
-                <ul class="answers">
-                    <li>Ser su propio jefe, hacer algo que se disfruta, tener la oportunidad de ser creativo, tener la libertad de fijar su propio horario, tener un puesto seguro, hacer más dinero, ser reconocido dentro de la comunidad.</li>
-                </ul>
-            </div>
-
-            <!-- Tipo de emprendedores -->
-            <div class="question">
-                <p class="definition">Utiliza la investigación para generar nuevas y mejores formas de hacer las cosas.</p>
-                <ul class="answers">
-                    <li>Emprendedor Administrativo.</li>
-                </ul>
-            </div>
-
-            <div class="question">
-                <p class="definition">Busca y aprovecha de manera constante las oportunidades y se mantiene alerta ante las posibilidades que le rodean.</p>
-                <ul class="answers">
-                    <li>Emprendedor Oportunista.</li>
-                </ul>
-            </div>
-
-            <div class="question">
-                <p class="definition">Se mantiene en continua innovación, lo cual le permite crecer y mejorar lo que hace.</p>
-                <ul class="answers">
-                    <li>Emprendedor Adquisitivo.</li>
-                </ul>
-            </div>
-
-            <div class="question">
-                <p class="definition">Crea de manera frecuente unidades independientes que al final se convierten en negocios nuevos.</p>
-                <ul class="answers">
-                    <li>Emprendedor Incubador.</li>
-                </ul>
-            </div>
-
-            <div class="question">
-                <p class="definition">Genera sus procesos de innovación a partir de la mejora de elementos o ideas ya existentes.</p>
-                <ul class="answers">
-                    <li>Emprendedor Imitador.</li>
-                </ul>
-            </div>
-
-            <div class="question">
-                <p class="definition">¿Qué es el Emprendedurismo?</p>
-                <ul class="answers">
-                    <li>Es la capacidad de organizar, manejar y asumir los riesgos de los negocios de una empresa, de ser emprendedor.</li>
-                </ul>
-            </div>
-
-            <div class="question">
-                <p class="definition">¿Qué es emprender?</p>
-                <ul class="answers">
-                    <li>Es acometer y comenzar una obra, un negocio, un empeño, especialmente si encierran dificultad o peligro.</li>
-                </ul>
-            </div>
-
-            <div class="question">
-                <p class="definition">Conjunto de valores, creencias y formas de actuar y expresarse en torno a un ecosistema de emprendimiento, que proporciona a las personas las habilidades necesarias para enfrentarse con éxito a los constantes cambios que se producen en el medio.</p>
-                <ul class="answers">
-                    <li>Emprendimiento.</li>
-                </ul>
-            </div>
-
-        </section>
-    </div>
+        window.onload = crearExamen;
+    </script>
 </body>
 </html>
