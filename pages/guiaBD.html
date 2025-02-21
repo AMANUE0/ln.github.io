@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Bases de Datos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: square;
+        } .back {
+            background-color: #2c3e50;
+            color: #bdc3c7;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            text-align: center;
+            margin: 10px auto;
+            width: 100px;
+            border-radius: 4px;
+        }
+        .back:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <a href="./asignatures.html" class="back">Volver</a>
+    <div class="container">
+        <h1>Guía de Bases de Datos</h1>
+        
+        <h2>Ventajas</h2>
+        <ul>
+            <li>Independencia física: La forma de almacenar los datos no influye en su manipulación.</li>
+            <li>Flexibilidad y seguridad: Ofrecen distintas vistas según los usuarios y restringen el acceso.</li>
+            <li>Uniformidad: Las estructuras lógicas siempre tienen una única forma conceptual.</li>
+            <li>Menor redundancia y mayor integridad: Se reduce la repetición de datos y se minimizan incoherencias.</li>
+        </ul>
+        
+        <h2>Desventajas</h2>
+        <ul>
+            <li>Necesidad de personal calificado.</li>
+            <li>Requerimientos adicionales de hardware.</li>
+            <li>Falta de rentabilidad a corto plazo.</li>
+        </ul>
+
+        <h2>Conceptos Básicos</h2>
+        <ul>
+            <li>Objetivo: Organizar y almacenar datos para su fácil manejo.</li>
+            <li>Una base de datos es un sistema formado por una colección de datos almacenados y categorizados de distintas maneras, pero que comparten algún tipo de vínculo que permita el acceso directo a ellos, así como sus relaciones.</li>
+            <li>DBMS/SGBD: Sistema de gestión de bases de datos.</li>
+            <li>Propósito del DBMS/SGBD: Proporcionar herramientas eficientes para manipular la información de manera rápida, fácil y segura.</li>
+            <li>Funciones: Añadir, modificar, eliminar datos, consultar información y generar reportes.</li>
+            <li>Un DBMS/SGBD debe: Crear bases de datos, mantener información y explotarla.</li>
+        </ul>
+
+        <h2>Definición y Componentes de una Base de Datos Relacional</h2>
+        <p>Una base de datos relacional almacena información en tablas. Estas están formadas por campos y registros.</p>
+        <ul>
+            <li>Registro: Información almacenada en cada campo.</li>
+            <li>Campo: Dato específico de un registro con nombre, tamaño y dirección.</li>
+        </ul>
+        
+        <h2>Tipos de Base de Datos</h2>
+        <ul>
+            <li>Plana: Formada por una sola tabla.</li>
+            <li>Relacional: Constituidas por múltiples tablas organizadas.</li>
+        </ul>
+        
+        <h2>Pasos para Diseñar una Base de Datos</h2>
+        <ol>
+            <li>Análisis</li>
+            <li>Diseño conceptual</li>
+            <li>Diseño lógico</li>
+            <li>Diseño físico</li>
+        </ol>
+        
+        <h2>Tipos de Claves</h2>
+        <ul>
+            <li>Clave principal: Identificador único para cada registro en una tabla.</li>
+            <li>Clave externa: Campo en una tabla que hace referencia a una clave principal en otra tabla.</li>
+            <li>Clave compuesta: Grupo de campos que identifican de manera única un registro.</li>
+        </ul>
+        
+        <h2>Normalización</h2>
+        <p>Proceso para eliminar redundancias e inconsistencias.</p>
+        <ul>
+            <li>Objetivos de la normalización:
+                <ul>
+                    <li>Evitar redundancia de datos.</li>
+                    <li>Evitar problemas de actualización.</li>
+                    <li>Proteger la integridad de los datos.</li>
+                </ul>
+            </li>
+            <li>Primera Forma Normal (1FN):
+                <ul>
+                    <li>Eliminar grupos repetitivos en las tablas.</li>
+                    <li>Crear una tabla separada para cada grupo de datos relacionados.</li>
+                    <li>Identificar cada grupo de datos con una clave primaria.</li>
+                </ul>
+            </li>
+            <li>Anomalías en bases de datos:
+                <ul>
+                    <li>Inserción: Ocurre cuando se inserta una nueva fila sin respetar las dependencias funcionales.</li>
+                    <li>Modificación: Se da cuando se modifican columnas con datos redundantes solo en algunas filas.</li>
+                    <li>Eliminación: Ocurre cuando se eliminan filas que contienen datos redundantes y se pierde información clave.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
