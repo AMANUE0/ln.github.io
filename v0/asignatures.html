@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/6788e71a64.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./header.css">
+    <link rel="stylesheet" href="./medias.css">
+    <link rel="stylesheet" href="./sidebar.css">
+    <link rel="stylesheet" href="./search-bar.css">
+    <link rel="stylesheet" href="./exam-cards.css">
+    <link rel="stylesheet" href="./main3.css">
+    <title>LN | Asignaturas</title>
+</head>
+<body>
+    <header>
+        <section>
+            <h1 class="logo">TC</h1>
+            <button class="menu"><i class="fa-solid fa-bars"></i></button>
+        </section>
+
+        <nav class="nav-content hidden-menu">
+            <ul class="nav-bar">
+                <li><a class="nav-item" href="../../index.html">Inicio</a></li>
+                <li><a class="nav-item" href="../pages/recursos.html">Recursos</a></li>
+                <li><a class="nav-item" href="../pages/">Actualizaciones</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Asignaturas</div>
+                <button class="menu-button">
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-content">
+                <ul class="sidebar-menu">
+                    <!-- Matemáticas -->
+                    <li class="menu-item">
+                        <div class="menu-header">
+                            <i class="fa-solid fa-calculator"></i>
+                            <span class="menu-title">Matemáticas</span>
+                        </div>
+                        <ul class="submenu">
+                            <li class="submenu-item">
+                                <span>Álgebra</span>
+                                <span class="difficulty medium">Medio</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Cálculo</span>
+                                <span class="difficulty hard">Difícil</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Geometría</span>
+                                <span class="difficulty easy">Fácil</span>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Ciencias -->
+                    <li class="menu-item">
+                        <div class="menu-header">
+                            <i class="fa-solid fa-flask"></i>
+                            <span class="menu-title">Ciencias</span>
+                        </div>
+                        <ul class="submenu">
+                            <li class="submenu-item">
+                                <span>Física</span>
+                                <span class="difficulty hard">Difícil</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Química</span>
+                                <span class="difficulty medium">Medio</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Biología</span>
+                                <span class="difficulty easy">Fácil</span>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Historia -->
+                    <li class="menu-item">
+                        <div class="menu-header">
+                            <i class="fa-solid fa-book"></i>
+                            <span class="menu-title">Historia</span>
+                        </div>
+                        <ul class="submenu">
+                            <li class="submenu-item">
+                                <span>Historia Mundial</span>
+                                <span class="difficulty medium">Medio</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Historia de México</span>
+                                <span class="difficulty easy">Fácil</span>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Idiomas -->
+                    <li class="menu-item">
+                        <div class="menu-header">
+                            <i class="fa-solid fa-language"></i>
+                            <span class="menu-title">Idiomas</span>
+                        </div>
+                        <ul class="submenu">
+                            <li class="submenu-item">
+                                <span>Inglés</span>
+                                <span class="difficulty medium">Medio</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Español</span>
+                                <span class="difficulty easy">Fácil</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Francés</span>
+                                <span class="difficulty hard">Difícil</span>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Programación -->
+                    <li class="menu-item">
+                        <div class="menu-header">
+                            <i class="fa-solid fa-code"></i>
+                            <span class="menu-title">Programación</span>
+                        </div>
+                        <ul class="submenu">
+                            <li class="submenu-item">
+                                <span>HTML/CSS</span>
+                                <span class="difficulty easy">Fácil</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>JavaScript</span>
+                                <span class="difficulty medium">Medio</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Python</span>
+                                <span class="difficulty medium">Medio</span>
+                            </li>
+                            <li class="submenu-item">
+                                <span>Java</span>
+                                <span class="difficulty hard">Difícil</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="https://i.pravatar.cc/150?img=12" alt="User Avatar" class="user-avatar">
+                    <div>
+                        <div class="user-name">Manuel Balderas</div>
+                        <div class="user-role">Desarrollador Frontend</div>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link"><i class="fa-solid fa-gear"></i></a>
+                    <a href="#" class="footer-link"><i class="fa-solid fa-circle-info"></i></a>
+                    <a href="https://www.instagram.com/elbalderass" class="footer-link"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <div id="main-wrapper" class="main-wrapper">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" id="search-input" class="search-input" placeholder="Buscar exámenes...">
+                    <button class="search-button">
+                        <i class="fa-solid fa-search"></i>
+                    </button>
+                </div>
+                <div class="search-filters">
+                    <div class="filter-tag" data-filter="fácil">
+                        <i class="fa-solid fa-circle"></i> Fácil
+                    </div>
+                    <div class="filter-tag" data-filter="medio">
+                        <i class="fa-solid fa-circle"></i> Medio
+                    </div>
+                    <div class="filter-tag" data-filter="difícil">
+                        <i class="fa-solid fa-circle"></i> Difícil
+                    </div>
+                    <div class="filter-tag" data-filter="técnica">
+                        <i class="fa-solid fa-circle"></i> Técnica
+                    </div>
+                    <div class="filter-tag" data-filter="general">
+                        <i class="fa-solid fa-circle"></i> General
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exam Categories -->
+            <div class="exam-row-container">
+                <!-- Matemáticas Category -->
+                <div class="category-section">
+                    <div class="row-header">
+                        <h2 class="row-title">Matemáticas</h2>
+                        <div class="row-controls">
+                            <button class="row-control prev-btn">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button class="row-control next-btn">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="exam-row">
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Álgebra" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Álgebra</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">45 Reactivos</span>
+                                    <span class="tag tag-type">Técnica</span>
+                                    <span class="tag tag-difficulty">Medio</span>
+                                </div>
+                                <a href="./Exams/matematicas/algebra.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Cálculo" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Cálculo</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">40 Reactivos</span>
+                                    <span class="tag tag-type">Técnica</span>
+                                    <span class="tag tag-difficulty">Difícil</span>
+                                </div>
+                                <a href="./Exams/matematicas/calculo.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Geometría" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Geometría</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">30 Reactivos</span>
+                                    <span class="tag tag-type">General</span>
+                                    <span class="tag tag-difficulty">Fácil</span>
+                                </div>
+                                <a href="./Exams/matematicas/geometria.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Trigonometría" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Trigonometría</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">35 Reactivos</span>
+                                    <span class="tag tag-type">Técnica</span>
+                                    <span class="tag tag-difficulty">Medio</span>
+                                </div>
+                                <a href="./Exams/matematicas/trigonometria.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ciencias Category -->
+                <div class="category-section">
+                    <div class="row-header">
+                        <h2 class="row-title">Ciencias</h2>
+                        <div class="row-controls">
+                            <button class="row-control prev-btn">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button class="row-control next-btn">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="exam-row">
+                        <div class="exam-card cancelled">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Física" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Física</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">30 Reactivos</span>
+                                    <span class="tag tag-type">General</span>
+                                    <span class="tag tag-difficulty">Difícil</span>
+                                </div>
+                                <a href="#" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Química" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Química</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">35 Reactivos</span>
+                                    <span class="tag tag-type">Técnica</span>
+                                    <span class="tag tag-difficulty">Medio</span>
+                                </div>
+                                <a href="./Exams/ciencias/quimica.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Biología" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Biología</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">40 Reactivos</span>
+                                    <span class="tag tag-type">General</span>
+                                    <span class="tag tag-difficulty">Fácil</span>
+                                </div>
+                                <a href="./Exams/ciencias/biologia.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Programación Category -->
+                <div class="category-section">
+                    <div class="row-header">
+                        <h2 class="row-title">Programación</h2>
+                        <div class="row-controls">
+                            <button class="row-control prev-btn">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button class="row-control next-btn">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="exam-row">
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de HTML/CSS" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de HTML/CSS</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">25 Reactivos</span>
+                                    <span class="tag tag-type">Técnica</span>
+                                    <span class="tag tag-difficulty">Fácil</span>
+                                </div>
+                                <a href="./Exams/programacion/html-css.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de JavaScript" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de JavaScript</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">35 Reactivos</span>
+                                    <span class="tag tag-type">Técnica</span>
+                                    <span class="tag tag-difficulty">Medio</span>
+                                </div>
+                                <a href="./Exams/programacion/javascript.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Python" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Python</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">30 Reactivos</span>
+                                    <span class="tag tag-type">Técnica</span>
+                                    <span class="tag tag-difficulty">Medio</span>
+                                </div>
+                                <a href="./Exams/programacion/python.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+
+                        <div class="exam-card">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background-img-g4LibUXzGjt1c1uzjYAxf76VD7XqhU.png" alt="Examen de Java" class="exam-image">
+                            <div class="exam-content">
+                                <h2 class="exam-title">Examen de Java</h2>
+                                <div class="tags-container">
+                                    <span class="tag tag-items">40 Reactivos</span>
+                                    <span class="tag tag-type">Técnica</span>
+                                    <span class="tag tag-difficulty">Difícil</span>
+                                </div>
+                                <a href="./Exams/programacion/java.html" class="exam-button">Entrar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sidebar toggle button -->
+    <button id="mobile-sidebar-toggle" class="mobile-sidebar-toggle">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Sidebar overlay for mobile -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <script src="./main.js"></script>
+    <script src="./sidebar.js"></script>
+</body>
+</html>
+

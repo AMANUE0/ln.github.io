@@ -1,0 +1,36 @@
+
+@font-face {
+    font-family: "inter GOOGLE";
+    src: url('../fonts/inter/Inter-VariableFont_opsz\,wght.ttf');
+}
+@media only screen and (min-width: 800px) {
+    body {
+    }
+    .menu {display: none;}
+    header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .nav-content {
+        display: flex;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .content-btns-hero {
+        flex-direction: column;
+        margin: 15px 0;
+    }
+    .nav-bar {
+        flex-direction: column;
+    }
+    .nav-item {
+        background-color: var(--bg-3);
+    }
+    .hero-h1 {
+        transform: scale(.45);
+    }
+    .hero-p {
+        transform: scale(.7);
+    }
+  }

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Exámenes</title>
+    <style>
+        /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .img-extended {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        /* Tarjeta de examen */
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-text {
+            font-size: 0.875rem;
+            color: #666;
+        }
+        
+        .progress-container {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #18181B;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .card-content {
+            padding: 20px;
+            /* Añadido para manejar contenido que desborda */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Opciones de respuesta */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .option:hover {
+            background-color: #f9fafb;
+        }
+        
+        .option.selected {
+            background-color: #eff6ff;
+            border-color: #18181B;
+        }
+        
+        .option input {
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .card-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Botones */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 0.875rem;
+        }
+        
+        .btn-primary {
+            background-color: #18181B;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #18181B;
+        }
+        
+        .btn-primary:disabled {
+            background-color: #7a7a7c;
+            cursor: not-allowed;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f9fafb;
+        }
+        
+        .btn-outline:disabled {
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        /* Resultados */
+        .results-summary {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .percentage {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+        
+        .review-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .review-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .review-question {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .review-answer {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-left: 24px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .correct {
+            color: #10b981;
+            font-weight: 500;
+        }
+        
+        .incorrect {
+            color: #ef4444;
+            font-weight: 500;
+        }
+        
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .icon-check {
+            color: #10b981;
+        }
+        
+        .icon-x {
+            color: #ef4444;
+        }
+        
+        .full-width-btn {
+            width: 100%;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        #topic {
+            margin: 0;
+            padding: 0;
+            font-size: 1rem;
+            text-align: left;
+        }
+        
+        /* Mejoras para tablas responsivas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        @media (min-width: 640px) {
+            table {
+                display: table;
+            }
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+            word-break: break-word;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .numbers {
+            background-color: #e2dede;
+            padding: 2px 5px;
+            border-radius: 10px;
+            display: inline-block;
+            word-break: break-word;
+        }
+        .volver {
+            padding: 15px 20px;
+            margin: 20px 10px;
+            box-shadow: 0 0 5px black;
+            background-color: #18181B;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+        }
+        /* Responsive */
+        @media (max-width: 640px) {
+            .card-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .card-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .review-question {
+                flex-direction: column;
+            }
+            
+            .review-answer {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Exámenes</h1>
+        <a href="../../../asignaturas/index.html" class="volver">Volver</a>
+        <div class="card" id="exam-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span id="question-number">Pregunta 1 de 5</span>
+                    <span class="progress-text" id="progress-text">20% completado</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 20%"></div>
+                </div>
+            </div>
+            
+            <div class="card-content">
+                <h1 id="topic"></h1>
+                <h2 class="question" id="question-text">¿Cuál es la capital de Francia?</h2>
+                
+                <div class="options" id="options-container">
+                    <!-- Las opciones se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <button class="btn btn-outline" id="prev-btn" disabled>Anterior</button>
+                <button class="btn btn-primary" id="next-btn" disabled>Siguiente</button>
+            </div>
+        </div>
+        
+        <div class="card" id="results-card" style="display: none;">
+            <div class="card-header">
+                <div class="card-title">Resultados del Examen</div>
+                <div>Has completado el examen. Aquí están tus resultados:</div>
+            </div>
+            
+            <div class="card-content">
+                <div class="results-summary">
+                    <p class="score" id="score">0 / 5</p>
+                    <p class="percentage" id="percentage">0% de respuestas correctas</p>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="results-progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="review-section" style="margin-top: 30px;">
+                    <h3 class="review-title">Revisión de respuestas:</h3>
+                    <div id="review-container">
+                        <!-- Los resultados se generarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="card-footer">
+                <button class="btn btn-primary full-width-btn" id="restart-btn">Reiniciar Examen</button>
+            </div>
+        </div>
+    </div>
+    <script> // evento extender imagen
+        // Estructura de preguntas: [pregunta, respuesta correcta, respuesta incorrecta 1, 2, 3...]
+        const preguntas = [
+        ["Dado el siguiente conjunto de datos: <span class='numbers'>5-5-10-10-10-15-15-15-15-20-20-20-20-20</span>, completa la columna de frecuencia absoluta (f):\n\n\
+    <table border='1'>\
+        <tr><th>Valor</th><th>Frecuencia Absoluta (f)</th></tr>\
+        <tr><td>5</td><td>?</td></tr>\
+        <tr><td>10</td><td>?</td></tr>\
+        <tr><td>15</td><td>?</td></tr>\
+        <tr><td>20</td><td>?</td></tr>\
+    </table>",
+    "2, 3, 4, 5", "3, 2, 5, 4", "2, 3, 5, 4", "3, 3, 4, 4", "Distribución de frecuencias para datos no agrupados"],
+    // **Recolectar información a partir de una gráfica**
+    ["Observa la siguiente gráfica de barras y responde: ¿Cuántos datos tienen una frecuencia mayor a 5?\n\n\
+    <img src='./images/grafico_1.png' width='300'>",
+    "4", "2", "3", "1", "Distribución de frecuencias para datos no agrupados"],
+
+    // **Escoger la gráfica de pastel correcta**
+    ["Se ha realizado una encuesta y los resultados fueron:\n\n\
+    <table border='1'>\
+        <tr><th>Categoría</th><th>Frecuencia (f)</th></tr>\
+        <tr><td>A</td><td>10</td></tr>\
+        <tr><td>B</td><td>20</td></tr>\
+        <tr><td>C</td><td>30</td></tr>\
+        <tr><td>D</td><td>40</td></tr>\
+    </table>\n\n\
+    Selecciona la gráfica de pastel que represente correctamente los datos. (especifica el angulo)",
+    "<img src='./images/grafico_3_correct.png' width='200'>",
+    "<img src='./images/grafico_2.png' width='200'>",
+    "<img src='./images/grafico_4.png' width='200'>",
+    "<img src='./images/grafico_5.png' width='200'>",
+    "Distribución de frecuencias para datos no agrupados"],
+
+    // **Ojiva (Frecuencia acumulada)**
+    ["Se tiene la siguiente tabla de frecuencias acumuladas, ¿cuál es la frecuencia absoluta acumulada del intervalo 20-30?\n\n\
+    <table border='1'>\
+        <tr><th>Clase</th><th>f</th><th>F</th></tr>\
+        <tr><td>0-10</td><td>3</td><td>3</td></tr>\
+        <tr><td>10-20</td><td>5</td><td>8</td></tr>\
+        <tr><td>20-30</td><td>7</td><td>?</td></tr>\
+    </table>",
+    "15", "7", "8", "10", "Ojiva"],
+    
+    // **Distribución de frecuencias para datos agrupados (Marca de clase)**
+    ["Se agrupan los siguientes datos en intervalos de clase: 1-5, 6-10, 11-15, 16-20. ¿Cuál es la marca de clase del intervalo 6-10?", 
+    "8", "7", "6", "9", "Distribución de frecuencias para datos agrupados"],
+    
+    // **Verificar datos faltantes en tabla de frecuencias**
+    ["Se tiene la siguiente tabla de frecuencias, ¿qué valor falta en la columna de frecuencia absoluta acumulada (fa) en la fila de 15?\n\n\
+    <table border='1'>\
+        <tr><th>Valor</th><th>f</th><th>fr</th><th>f%</th><th>fa</th><th>fra</th><th>f%a</th></tr>\
+        <tr><td>5</td><td>4</td><td>0.2</td><td>20</td><td>4</td><td>0.2</td><td>20</td></tr>\
+        <tr><td>10</td><td>6</td><td>?</td><td>30</td><td>10</td><td>?</td><td>50</td></tr>\
+        <tr><td>15</td><td>5</td><td>0.25</td><td>?</td><td>?</td><td>0.75</td><td>?</td></tr>\
+        <tr><td>20</td><td>5</td><td>?</td><td>25</td><td>?</td><td>1</td><td>100</td></tr>\
+    </table>",
+    "15", "10", "11", "14", "Distribución de frecuencias para datos no agrupados"],
+
+    
+
+    // Escalas de medición
+    ["¿Cuál de las siguientes variables es de escala nominal?", "Color de ojos", "Peso en kg", "Temperatura en °C", "Edad en años", "Escalas de medición"],
+
+    // Ordenar datos cualitativos
+    ["Si se tienen los siguientes datos cualitativos: {Azul, Verde, Azul, Rojo, Verde, Azul, Rojo}, ¿cuál es la moda?", "Azul", "Rojo", "Verde", "No hay moda", "Ordenar datos cualitativos"],
+
+    // **Gráfica de barras**
+    ["Dada la siguiente gráfica de barras, ¿cuál es la categoría con mayor frecuencia?\n\n<img src='./images/grafico_barras1.png' width='200'>", "Categoría B", "Categoría A", "Categoría C", "Todas tienen la misma frecuencia", "Gráfica de barras"],
+
+    // **Gráfica circular o de sectores**
+    ["Si en una empresa el 40% de los empleados son administrativos, el 35% operativos y el 25% de ventas, ¿cuánto mediría el ángulo del sector de administrativos en un gráfico circular?", "144°", "126°", "90°", "108°", "Gráfica circular o de sectores"],
+
+    // **Histograma**
+    ["En un histograma, ¿qué representa la altura de cada barra?", "Frecuencia", "Intervalo", "Marca de clase", "Rango", "Histograma"],
+
+    // **Polígono de frecuencias**
+    ["En un polígono de frecuencias, ¿qué punto se grafica en el eje X?", "La marca de clase", "El límite inferior", "El límite superior", "La amplitud", "Polígono de frecuencias"],
+    
+    // NUEVAS PREGUNTAS
+    
+    // Ventas mensuales
+    ["Observa la siguiente tabla de ventas mensuales de jugos y responde: ¿En qué mes se registró la mayor venta de jugos?\n\n\
+    <table border='1'>\
+        <tr><th>Mes</th><th>Ventas (litros)</th></tr>\
+        <tr><td>Enero</td><td>1250</td></tr>\
+        <tr><td>Febrero</td><td>980</td></tr>\
+        <tr><td>Marzo</td><td>1420</td></tr>\
+        <tr><td>Abril</td><td>1380</td></tr>\
+        <tr><td>Mayo</td><td>1560</td></tr>\
+    </table>",
+    "Mayo", "Marzo", "Abril", "Enero", "Análisis de datos"],
+    
+    // Número de hermanos
+    ["La siguiente tabla muestra el número de hermanos que tienen los socios de un club deportivo:\n\n\
+    <table border='1'>\
+        <tr><th>Número de hermanos</th><th>Frecuencia (f)</th></tr>\
+        <tr><td>0</td><td>15</td></tr>\
+        <tr><td>1</td><td>25</td></tr>\
+        <tr><td>2</td><td>20</td></tr>\
+        <tr><td>3</td><td>10</td></tr>\
+        <tr><td>4 o más</td><td>5</td></tr>\
+    </table>\n\n\
+    ¿Cuántos socios tienen menos de tres hermanos?",
+    "60", "45", "40", "35", "Distribución de frecuencias para datos no agrupados"],
+    
+    // Porcentaje de socios
+    ["Considerando la tabla sobre el número de hermanos de los socios del club deportivo:\n\n\
+    <table border='1'>\
+        <tr><th>Número de hermanos</th><th>Frecuencia (f)</th></tr>\
+        <tr><td>0</td><td>15</td></tr>\
+        <tr><td>1</td><td>25</td></tr>\
+        <tr><td>2</td><td>20</td></tr>\
+        <tr><td>3</td><td>10</td></tr>\
+        <tr><td>4 o más</td><td>5</td></tr>\
+    </table>\n\n\
+    ¿Qué porcentaje de socios tiene exactamente un hermano?",
+    "33.33%", "25%", "20%", "15%", "Distribución de frecuencias para datos no agrupados"],
+    
+    // Calificaciones de estudiantes
+    ["La siguiente tabla muestra las calificaciones obtenidas por un grupo de estudiantes:\n\n\
+    <table border='1'>\
+        <tr><th>Calificación</th><th>Frecuencia (f)</th></tr>\
+        <tr><td>5</td><td>3</td></tr>\
+        <tr><td>6</td><td>7</td></tr>\
+        <tr><td>7</td><td>12</td></tr>\
+        <tr><td>8</td><td>15</td></tr>\
+        <tr><td>9</td><td>10</td></tr>\
+        <tr><td>10</td><td>3</td></tr>\
+    </table>\n\n\
+    ¿Qué porcentaje de estudiantes obtuvo una calificación mayor o igual a 8?",
+    "56%", "50%", "44%", "28%", "Distribución de frecuencias para datos no agrupados"],
+    
+    
+    // Análisis de datos de precipitación
+    ["La siguiente tabla muestra la precipitación mensual (en mm) durante un año en una estación meteorológica:\n\n\
+    <table border='1'>\
+        <tr><th>Mes</th><th>Precipitación (mm)</th></tr>\
+        <tr><td>Enero</td><td>45</td></tr>\
+        <tr><td>Febrero</td><td>38</td></tr>\
+        <tr><td>Marzo</td><td>52</td></tr>\
+        <tr><td>Abril</td><td>65</td></tr>\
+        <tr><td>Mayo</td><td>78</td></tr>\
+        <tr><td>Junio</td><td>120</td></tr>\
+        <tr><td>Julio</td><td>135</td></tr>\
+        <tr><td>Agosto</td><td>110</td></tr>\
+        <tr><td>Septiembre</td><td>95</td></tr>\
+        <tr><td>Octubre</td><td>72</td></tr>\
+        <tr><td>Noviembre</td><td>58</td></tr>\
+        <tr><td>Diciembre</td><td>50</td></tr>\
+    </table>\n\n\
+    ¿En qué trimestre del año se registró la mayor precipitación acumulada?",
+    "Julio-Septiembre", "Junio-Agosto", "Abril-Junio", "Mayo-Julio", "Análisis de datos"]
+];
+
+        
+
+        // Variables globales
+        let preguntaActual = 0;
+        let respuestas = Array(preguntas.length).fill("");
+        let opcionesMezcladas = [];
+
+        // Elementos del DOM
+        const examCard = document.getElementById('exam-card');
+        const resultsCard = document.getElementById('results-card');
+        const topic = document.getElementById('topic');
+        const questionNumber = document.getElementById('question-number');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreElement = document.getElementById('score');
+        const percentageElement = document.getElementById('percentage');
+        const resultsProgressBar = document.getElementById('results-progress-bar');
+        const reviewContainer = document.getElementById('review-container');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Inicializar el examen
+        function inicializarExamen() {
+            // Mezclar las opciones para cada pregunta
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1, 5); // Todas las respuestas (correcta e incorrectas)
+                return [...opciones].sort(() => Math.random() - 0.5); // Mezclar opciones
+            });
+            
+            mostrarPregunta();
+            
+            // Event listeners
+            prevBtn.addEventListener('click', irPreguntaAnterior);
+            nextBtn.addEventListener('click', irPreguntaSiguiente);
+            restartBtn.addEventListener('click', reiniciarExamen);
+        }
+
+        // Mostrar la pregunta actual
+        function mostrarPregunta() {
+            // Obtener el tema de la pregunta
+            let tema = preguntas[preguntaActual][5];
+            topic.textContent = "Tema: " + tema;
+            console.log(tema);
+            // Actualizar número de pregunta y progreso
+            questionNumber.textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
+            const progreso = ((preguntaActual + 1) / preguntas.length) * 100; // Formula para sacar porcentaje 
+            progressText.textContent = `${Math.round(progreso)}% completado`;
+            progressBar.style.width = `${progreso}%`;
+            
+            // Mostrar texto de la pregunta
+            questionText.innerHTML = preguntas[preguntaActual][0];
+            
+            // Generar opciones
+            optionsContainer.innerHTML = '';
+            opcionesMezcladas[preguntaActual].forEach((opcion, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = `option ${respuestas[preguntaActual] === opcion ? 'selected' : ''}`;
+                optionDiv.dataset.value = opcion;
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" id="option-${index}" name="question-option" 
+                           ${respuestas[preguntaActual] === opcion ? 'checked' : ''}>
+                    <label for="option-${index}">${opcion}</label>
+                `;
+                
+                optionDiv.addEventListener('click', () => seleccionarOpcion(opcion));
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Actualizar estado de los botones
+            prevBtn.disabled = preguntaActual === 0;
+            nextBtn.disabled = !respuestas[preguntaActual];
+            
+            if (preguntaActual === preguntas.length - 1) {
+                nextBtn.textContent = 'Finalizar';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+
+        // Seleccionar una opción
+        function seleccionarOpcion(opcion) {
+            respuestas[preguntaActual] = opcion;
+            
+            // Actualizar UI
+            document.querySelectorAll('.option').forEach(el => {
+                el.classList.remove('selected');
+                if (el.dataset.value === opcion) {
+                    el.classList.add('selected');
+                    el.querySelector('input').checked = true;
+                }
+            });
+            
+            nextBtn.disabled = false;
+        }
+
+        // Ir a la pregunta anterior
+        function irPreguntaAnterior() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta();
+            }
+        }
+
+        // Ir a la siguiente pregunta
+        function irPreguntaSiguiente() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta();
+            } else {
+                mostrarResultados();
+            }
+        }
+
+        // Mostrar resultados
+        function mostrarResultados() {
+            examCard.style.display = 'none';
+            resultsCard.style.display = 'block';
+            
+            // Calcular puntuación
+            let puntos = 0;
+            respuestas.forEach((respuesta, index) => {
+                if (respuesta === preguntas[index][1]) {
+                    puntos++;
+                }
+            });
+            
+            const porcentaje = (puntos / preguntas.length) * 100;
+            
+            // Actualizar UI
+            scoreElement.textContent = `${puntos} / ${preguntas.length}`;
+            percentageElement.textContent = `${Math.round(porcentaje)}% de respuestas correctas`;
+            resultsProgressBar.style.width = `${porcentaje}%`;
+            
+            // Generar revisión de respuestas
+            reviewContainer.innerHTML = '';
+            preguntas.forEach((pregunta, index) => {
+                const esCorrecta = respuestas[index] === pregunta[1];
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                
+                reviewItem.innerHTML = `
+                    <div class="review-question">
+                        <span class="icon ${esCorrecta ? 'icon-check' : 'icon-x'}">
+                            ${esCorrecta ? '✓' : '✗'}
+                        </span>
+                        <span>${pregunta[0]}</span>
+                    </div>
+                    <div class="review-answer">
+                        Tu respuesta: <span class="${esCorrecta ? 'correct' : 'incorrect'}">
+                            ${respuestas[index] || 'Sin respuesta'}
+                        </span>
+                    </div>
+                    ${!esCorrecta ? `
+                        <div class="review-answer">
+                            Respuesta correcta: <span class="correct">${pregunta[1]}</span>
+                        </div>
+                    ` : ''}
+                `;
+                
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+        // Reiniciar examen
+        function reiniciarExamen() {
+            preguntaActual = 0;
+            respuestas = Array(preguntas.length).fill("");
+            
+            // Mezclar opciones nuevamente
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1);
+                return [...opciones].sort(() => Math.random() - 0.5);
+            });
+            
+            // Mostrar tarjeta de examen
+            examCard.style.display = 'block';
+            resultsCard.style.display = 'none';
+            
+            mostrarPregunta();
+        }
+
+       
+        
+        // Iniciar el examen cuando cargue la página
+        document.addEventListener('DOMContentLoaded', inicializarExamen);
+    </script>
+</body>
+</html>
+
+
+<!-- Temas etapa 2-->
+<!--
+    - Medidas estadisticas
+    - Medidas estadisticas en datos no agrupados
+    - Medidas estadisticas en datoa agrupados
+    - Medidas estadisticas en datoa no agrupados
+        - Medidas de variacion
+        - Rango
+        - Desvuacion media
+        - Varianza y desviacion estandar
+        - Coeficiente de variacion
+    - Medidas estadistica en datos agrupados
+        - Medidas de variacion
+        - Varianza y desviacion estandar
+        - 
+
+-->

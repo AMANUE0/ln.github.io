@@ -1,0 +1,165 @@
+/* Estilo principal de las tarjetas */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-width: 1200px;
+    margin: 50px auto;
+    justify-content: center;
+}
+
+.content-asignatura {
+    background-color: var(--bg-2);
+    border-radius:3px;
+    box-shadow: 0 4px 8px #0000001a;
+    width: 330px;
+    position: relative; /* Necesario para usar position: absolute en los elementos internos */
+    transition: transform 0.3s ease-in-out;
+    flex-grow: 1;
+}
+
+.content-asignatura:hover {
+    transform: translateY(-8px);
+}
+
+/* Imagen dentro de la tarjeta */
+.content-asignatura img {
+    width: 100%;
+    height: 200px; /* Tamaño fijo */
+    object-fit: cover;
+    margin-bottom: 20px;
+    margin: 0;
+    border-radius: 2px 2px 0 0;
+}
+.cancelado {
+    color: red;
+    padding: 10px;
+    border: 4px red solid;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 10;
+    top: 44%;
+    left: 32%;
+    transform: scale(2.7) rotate(-45deg);
+    font-weight: bold;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5px;
+    height: 120px;
+    gap: 10px;
+}
+.start {
+    background-color: #222;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 15px;
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    margin: 0;
+}
+/* Títulos de asignaturas */
+h3 {
+    margin: 0;
+}
+
+.tags {
+    display: flex;
+    width: 100%;
+    gap: 5px;
+}
+.tag {
+    background-color: #d8d8d8;
+    padding: 2PX;
+    width: 80px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.start:hover {
+    background-color: #444;
+}
+.terminado {
+    pointer-events: none;
+    background-color: #979797;
+}
+.terminado:hover {
+    background-color: #979797;
+}
+
+/* Animación para el texto */
+.desarrollo {
+    display: block;
+    animation:  1.5s;
+    position: relative;
+    overflow: hidden;
+}
+.desarrollo:hover::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: skew(30deg);
+    background-color: rgb(202, 201, 201);
+    animation: desarrollo .5s forwards;
+}
+
+/* Animación de cambio de color */
+@keyframes desarrollo {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 110%;
+    }
+}
+
+/* Animación de cambio de tamaño */
+@keyframes listo {
+    0% {
+        font-size: 18px;
+    }
+    50% {
+        font-size: 22px;
+    }
+    100% {
+        font-size: 18px;
+    }
+}
+@media only screen and (min-width: 800px) {
+    .menu {display: none;}
+    header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .nav-content {
+        display: flex;
+    }
+}
+@media only screen and (max-width: 700px) {
+    .content-asignatura { margin: 0 15px;}
+
+    header {
+    }
+    .nav-bar {
+        flex-direction: column;
+    }
+    .nav-item {
+    }
+}     
+.examen {
+    text-align: center;
+    padding: 10px;
+    background-color: #d4d4d4;
+    margin: 0 auto;
+    max-width: 1400px;
+}

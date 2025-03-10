@@ -1,0 +1,49 @@
+
+
+:root {
+    --color: #333333;
+    --bg-1: white;
+    --bg-2: #E0E0E0;
+    --bg-3: #d4d4d4;
+    --bg-4: black;
+    --font: inter GOOGLE;
+}
+
+.dark-mode {
+    --color: white;
+    --bg-1: #1f1e1e;
+    --bg-2: #333232;
+    --bg-3: #3b3b3b;
+    --bg-4: black;
+    
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-1);
+    color: var(--color);
+    font-family: var(--font);
+    margin: 0;
+    transition: background .5s, color .5s;
+}
+html, body {
+    overflow-x: hidden;
+}
+p {
+    color: #a5a4a4;
+    font-weight: bold;
+}
+
+/*-------------------*/
+
+/*----------*/
+
+/*-----TEAMS-----*//*----- TEAMS -----*/
+
+
+
+/*----------*/

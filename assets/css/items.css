@@ -1,0 +1,21 @@
+.crown {
+    position: absolute;
+    top: 0;
+    transform: scale(1.4);
+}
+.osu {
+    width: 40px;
+    height: 40px;
+    background-color: #EC5F9E;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    transform: scale(.9);
+    padding: 2px;
+    animation: osu .2s infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

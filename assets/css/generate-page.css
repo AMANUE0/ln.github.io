@@ -1,0 +1,14 @@
+.menu-generate {
+    border: 0;
+    padding: 15px;
+    margin: 5px;
+    background-color: var(--bg-3);
+    color: var(--color);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.menu-generate:hover {
+    
+    transform: translateY(-2px);
+}

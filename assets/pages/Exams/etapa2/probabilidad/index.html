@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Exámenes</title>
+    <style>
+        /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .img-extended {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        /* Tarjeta de examen */
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-text {
+            font-size: 0.875rem;
+            color: #666;
+        }
+        
+        .progress-container {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #18181B;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .card-content {
+            padding: 20px;
+            /* Añadido para manejar contenido que desborda */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Opciones de respuesta */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .option:hover {
+            background-color: #f9fafb;
+        }
+        
+        .option.selected {
+            background-color: #eff6ff;
+            border-color: #18181B;
+        }
+        
+        .option input {
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .card-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Botones */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 0.875rem;
+        }
+        
+        .btn-primary {
+            background-color: #18181B;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #18181B;
+        }
+        
+        .btn-primary:disabled {
+            background-color: #7a7a7c;
+            cursor: not-allowed;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f9fafb;
+        }
+        
+        .btn-outline:disabled {
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        /* Resultados */
+        .results-summary {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .percentage {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+        
+        .review-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .review-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .review-question {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .review-answer {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-left: 24px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .correct {
+            color: #10b981;
+            font-weight: 500;
+        }
+        
+        .incorrect {
+            color: #ef4444;
+            font-weight: 500;
+        }
+        
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .icon-check {
+            color: #10b981;
+        }
+        
+        .icon-x {
+            color: #ef4444;
+        }
+        
+        .full-width-btn {
+            width: 100%;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        #topic {
+            margin: 0;
+            padding: 0;
+            font-size: 1rem;
+            text-align: left;
+        }
+        
+        /* Mejoras para tablas responsivas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        @media (min-width: 640px) {
+            table {
+                display: table;
+            }
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+            word-break: break-word;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .numbers {
+            background-color: #e2dede;
+            padding: 2px 5px;
+            border-radius: 10px;
+            display: inline-block;
+            word-break: break-word;
+        }
+        .volver {
+            padding: 15px 20px;
+            margin: 20px 10px;
+            box-shadow: 0 0 5px black;
+            background-color: #18181B;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+        }
+        /* Responsive */
+        @media (max-width: 640px) {
+            .card-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .card-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .review-question {
+                flex-direction: column;
+            }
+            
+            .review-answer {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Exámenes</h1>
+        <a href="../../../asignaturas/index.html" class="volver">Volver</a>
+        <div class="card" id="exam-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span id="question-number">Pregunta 1 de 5</span>
+                    <span class="progress-text" id="progress-text">20% completado</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 20%"></div>
+                </div>
+            </div>
+            
+            <div class="card-content">
+                <h1 id="topic"></h1>
+                <h2 class="question" id="question-text">¿Cuál es la capital de Francia?</h2>
+                
+                <div class="options" id="options-container">
+                    <!-- Las opciones se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <button class="btn btn-outline" id="prev-btn" disabled>Anterior</button>
+                <button class="btn btn-primary" id="next-btn" disabled>Siguiente</button>
+            </div>
+        </div>
+        
+        <div class="card" id="results-card" style="display: none;">
+            <div class="card-header">
+                <div class="card-title">Resultados del Examen</div>
+                <div>Has completado el examen. Aquí están tus resultados:</div>
+            </div>
+            
+            <div class="card-content">
+                <div class="results-summary">
+                    <p class="score" id="score">0 / 5</p>
+                    <p class="percentage" id="percentage">0% de respuestas correctas</p>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="results-progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="review-section" style="margin-top: 30px;">
+                    <h3 class="review-title">Revisión de respuestas:</h3>
+                    <div id="review-container">
+                        <!-- Los resultados se generarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="card-footer">
+                <button class="btn btn-primary full-width-btn" id="restart-btn">Reiniciar Examen</button>
+            </div>
+        </div>
+    </div>
+   
+    <script> // evento extender imagen
+    // Estructura de preguntas: [pregunta, respuesta correcta, respuesta incorrecta 1, 2, 3...]
+    const preguntas = [
+    ["La mayor de 50 medidas es 15.84 kg- Si el rango es de 4.5 kg la medida mas pequeña es.", "11.34 kg", "11 kg", "10 kg", "9.10 kg", "Rango"],
+    
+    ["La desviacion media del conjunto 9-8-7-4-3-4", "2.17", "1.44", "2.0", "2.15", "Desviacion Media"],
+    
+    ["Una empresa importadora ha revisado un lote de 50 juegos de loza que fueron defectuosamente trasladadas, lo cual provoco la rotura de algunas piezas. La siguiente grafica representa el informe entregado por la persona encargada del almacen.  <img src='./images/grafico1.png' alt='Grafico de barras'> ¿Cual es la moda segun el grafico?", "6 Piezas rotas.", "1 y 10 Piezas rotas.", "20 Piezas rotas.", "No hay moda.","Medidas de tendencia central - Moda"],
+    
+    ["La siquiente lista muestra las horas semanales que los usuarios de internet dedican al uso de la red en fines laborales, es decir, para el entretenimiento. \n\n\
+    <table border='1'>\
+        <tr><th>Pais (x)</th><th>Horas (f)</th></tr>\
+        <tr><td>Mexico</td><td>2</td></tr>\
+        <tr><td>Argentina</td><td>5</td></tr>\
+        <tr><td>Peru</td><td>8</td></tr>\
+        <tr><td>España</td><td>4</td></tr>\
+        <tr><td>Chile</td><td>4</td></tr>\
+    </table> Calcula la media, mediana y moda.", "Media: 4.6 horas - Mediana: 4 horas - Moda: 4 horas", "Media: 4.6 horas - Mediana: 8 horas - Moda: 5 horas", "Media: 4.6 horas - Mediana: 4 horas - No hay moda.", "Media: 23 horas - Mediana: 4 horas - Moda: 4 horas", "Medidas de estadisticas."],
+    
+    // Ejercicio de desviación media
+    ["Calcule la desviación media del siguiente conjunto de datos: 12, 15, 18, 21, 24", 
+    "3.6", "4.2", "3.0", "4.8", "Desviación Media"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Calcule la media aritmética del siguiente conjunto de datos: 8, 12, 15, 10, 9, 14, 11", 
+    "11.29", "11", "10.5", "12", "Medidas estadísticas en datos no agrupados"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Determine la mediana del siguiente conjunto de datos: 7, 9, 3, 5, 8, 6, 4", 
+    "6", "5.5", "5", "7", "Medidas estadísticas en datos no agrupados"],
+    
+    // Mantenemos esta pregunta práctica
+    ["¿Cuál es la moda del siguiente conjunto de datos: 5, 8, 10, 5, 7, 8, 5, 9, 8, 10?", 
+    "5", "8", "5 y 8 (bimodal)", "10", "Medidas estadísticas en datos no agrupados"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Calcule el rango del siguiente conjunto de datos: 15, 22, 18, 30, 25, 20, 17", 
+    "15", "30", "22.5", "7.5", "Medidas de variación"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Calcule la varianza del siguiente conjunto de datos: 5, 7, 9, 11, 13", 
+    "8", "9", "10", "11", "Varianza y desviación estándar"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Si la varianza de un conjunto de datos es 16, ¿cuál es la desviación estándar?", 
+    "4", "8", "2", "16", "Varianza y desviación estándar"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Si un conjunto de datos tiene una media de 50 y una desviación estándar de 10, ¿cuál es el coeficiente de variación?", 
+    "20%", "10%", "5%", "25%", "Coeficiente de variación"],
+    
+    // Ejercicio de coeficiente de variación
+    ["Dados dos conjuntos de datos: Conjunto A (media = 80, desviación estándar = 12) y Conjunto B (media = 40, desviación estándar = 8). ¿Cuál conjunto tiene mayor variabilidad relativa?", 
+    "Conjunto B", "Conjunto A", "Ambos tienen la misma variabilidad relativa", "No se puede determinar", "Coeficiente de variación"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Dada la siguiente tabla de frecuencias, calcule la media aritmética:\n\n\
+    <table border='1'>\
+        <tr><th>Valor (x)</th><th>Frecuencia (f)</th></tr>\
+        <tr><td>10</td><td>2</td></tr>\
+        <tr><td>15</td><td>5</td></tr>\
+        <tr><td>20</td><td>8</td></tr>\
+        <tr><td>25</td><td>4</td></tr>\
+        <tr><td>30</td><td>1</td></tr>\
+    </table>",
+    "19.5", "20", "18.5", "21", "Medidas estadísticas en datos no agrupados"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Dada la siguiente tabla de frecuencias, determine la mediana:\n\n\
+    <table border='1'>\
+        <tr><th>Valor (x)</th><th>Frecuencia (f)</th></tr>\
+        <tr><td>5</td><td>3</td></tr>\
+        <tr><td>10</td><td>7</td></tr>\
+        <tr><td>15</td><td>12</td></tr>\
+        <tr><td>20</td><td>5</td></tr>\
+        <tr><td>25</td><td>3</td></tr>\
+    </table>",
+    "15", "10", "12.5", "17.5", "Medidas estadísticas en datos no agrupados"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Calcule la varianza para los siguientes datos agrupados:\n\n\
+    <table border='1'>\
+        <tr><th>Clase</th><th>Frecuencia (f)</th></tr>\
+        <tr><td>10-20</td><td>5</td></tr>\
+        <tr><td>20-30</td><td>8</td></tr>\
+        <tr><td>30-40</td><td>15</td></tr>\
+        <tr><td>40-50</td><td>7</td></tr>\
+        <tr><td>50-60</td><td>5</td></tr>\
+    </table>",
+    "156.25", "12.5", "144", "169", "Medidas estadísticas en datos agrupados"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Complete los valores faltantes en la siguiente tabla de medidas de tendencia central:\n\n\
+    <table border='1'>\
+        <tr><th>Conjunto de datos</th><th>Media</th><th>Mediana</th><th>Moda</th><th>Rango</th></tr>\
+        <tr><td>A</td><td>15</td><td>14</td><td>?</td><td>20</td></tr>\
+        <tr><td>B</td><td>25</td><td>?</td><td>22</td><td>15</td></tr>\
+        <tr><td>C</td><td>?</td><td>18</td><td>18</td><td>12</td></tr>\
+    </table>",
+    "13, 25, 18", "12, 24, 17", "14, 26, 19", "13, 24, 17", "Medidas estadísticas"],
+    
+    // Reemplazo: Nuevo ejercicio de desviación media
+    ["En un examen, un estudiante obtuvo las siguientes calificaciones: 75, 82, 78, 90, 85. Calcule la desviación media de sus calificaciones.", 
+    "5.2", "4.8", "6.0", "5.6", "Desviación Media"],
+    
+    // Reemplazo: Nuevo ejercicio de desviación estándar
+    ["Un estudiante obtuvo las siguientes calificaciones en sus exámenes: 85, 92, 78, 90, 88. Calcule la desviación estándar de sus calificaciones.", 
+    "5.37", "6.42", "4.89", "28.8", "Varianza y desviación estándar"],
+    
+    // Reemplazo: Nuevo ejercicio de rango
+    ["En una competencia de salto de longitud, los resultados (en metros) fueron: 6.75, 7.20, 6.90, 7.05, 6.85, 7.15. Calcule el rango de estos datos.", 
+    "0.45", "0.50", "0.40", "0.30", "Medidas de variación"],
+    
+    // Reemplazo: Nuevo ejercicio de varianza
+    ["Las alturas (en cm) de un grupo de estudiantes son: 165, 170, 168, 172, 175, 169. Calcule la varianza de las alturas.", 
+    "11.89", "10.5", "12.25", "3.45", "Varianza y desviación estándar"],
+    
+    // Reemplazo: Nuevo ejercicio de coeficiente de variación
+    ["Calcule el coeficiente de variación para un conjunto de datos con media = 45 y desviación estándar = 9.", 
+    "20%", "15%", "25%", "30%", "Coeficiente de variación"],
+    
+    // Reemplazo: Nuevo ejercicio de desviación media
+    ["Para el conjunto de datos: 10, 12, 15, 18, 20. Calcule la desviación media.", 
+    "3.2", "4", "2.8", "3.6", "Desviación Media"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Las edades de un grupo de 6 amigos son: 22, 24, 23, 25, 21, 23 años. Calcule la varianza de las edades.", 
+    "1.89", "2.25", "1.5", "2", "Varianza y desviación estándar"],
+    
+    // Mantenemos esta pregunta práctica
+    ["En una fábrica, la máquina A produce piezas con longitud media de 15 cm y desviación estándar de 0.3 cm. La máquina B produce piezas con longitud media de 10 cm y desviación estándar de 0.25 cm. ¿Qué máquina tiene mayor precisión relativa?", 
+    "Máquina A", "Máquina B", "Ambas tienen la misma precisión", "No se puede determinar", "Coeficiente de variación"],
+    
+    // Mantenemos esta pregunta práctica
+    ["En datos agrupados, ¿cómo se calcula la media aritmética?", 
+    "Sumando el producto de cada marca de clase por su frecuencia y dividiendo entre la suma de frecuencias", 
+    "Sumando todas las marcas de clase y dividiendo entre el número de clases", 
+    "Identificando el valor que más se repite", 
+    "Ordenando los datos y seleccionando el valor central", 
+    "Medidas estadísticas en datos agrupados"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Calcule la desviación estándar para los siguientes datos agrupados:\n\n\
+    <table border='1'>\
+        <tr><th>Clase</th><th>Marca de clase (x)</th><th>Frecuencia (f)</th></tr>\
+        <tr><td>0-10</td><td>5</td><td>3</td></tr>\
+        <tr><td>10-20</td><td>15</td><td>7</td></tr>\
+        <tr><td>20-30</td><td>25</td><td>12</td></tr>\
+        <tr><td>30-40</td><td>35</td><td>8</td></tr>\
+        <tr><td>40-50</td><td>45</td><td>5</td></tr>\
+    </table>",
+    "12.5", "11.8", "13.2", "156.25", "Varianza y desviación estándar"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Los siguientes datos representan el número de horas que un grupo de estudiantes dedica a estudiar semanalmente: 10, 15, 12, 8, 20, 18, 14, 10. Calcule la varianza.", 
+    "16.5", "15", "4.06", "18.2", "Varianza y desviación estándar"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Se tienen dos grupos de estudiantes. El Grupo A tiene una media de 75 y una desviación estándar de 8. El Grupo B tiene una media de 70 y una desviación estándar de 4. ¿Qué grupo tiene mayor variabilidad relativa?", 
+    "Grupo A", "Grupo B", "Ambos tienen la misma variabilidad relativa", "No se puede determinar", "Coeficiente de variación"],
+    
+    // Reemplazo: Nuevo ejercicio de desviación estándar
+    ["En una distribución de datos, la suma de los cuadrados de las desviaciones respecto a la media es 450 y hay 15 datos. Calcule la desviación estándar.", 
+    "5.48", "5", "30", "6", "Varianza y desviación estándar"],
+    
+    // Mantenemos esta pregunta práctica
+    ["Se realizaron mediciones de temperatura en dos ciudades. Ciudad A: media = 25°C, desviación estándar = 3°C. Ciudad B: media = 15°C, desviación estándar = 2°C. ¿Qué ciudad tiene mayor variabilidad relativa en su temperatura?", 
+    "Ciudad B", "Ciudad A", "Ambas tienen la misma variabilidad relativa", "No se puede determinar", "Coeficiente de variación"],
+    
+    // Nuevo ejercicio: Desviación media
+    ["Calcule la desviación media del siguiente conjunto de datos: 25, 28, 30, 32, 35", 
+    "2.8", "3.2", "2.5", "10", "Desviación Media"],
+    
+    // Nuevo ejercicio: Varianza y desviación estándar
+    ["Un conjunto de datos tiene una media de 50. La suma de los cuadrados de las desviaciones respecto a la media es 800 y hay 10 datos. ¿Cuál es la desviación estándar?", 
+    "8.94", "80", "8", "9.5", "Varianza y desviación estándar"],
+    
+    // Nuevo ejercicio: Rango y coeficiente de variación
+    ["Para un conjunto de datos, se sabe que el valor mínimo es 15, el valor máximo es 45, la media es 30 y la desviación estándar es 9. Calcule el rango y el coeficiente de variación.", 
+    "Rango = 30, CV = 30%", "Rango = 30, CV = 3%", "Rango = 45, CV = 30%", "Rango = 15, CV = 30%", "Medidas de variación"]
+];
+        
+
+        // Variables globales
+        let preguntaActual = 0;
+        let respuestas = Array(preguntas.length).fill("");
+        let opcionesMezcladas = [];
+
+        // Elementos del DOM
+        const examCard = document.getElementById('exam-card');
+        const resultsCard = document.getElementById('results-card');
+        const topic = document.getElementById('topic');
+        const questionNumber = document.getElementById('question-number');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreElement = document.getElementById('score');
+        const percentageElement = document.getElementById('percentage');
+        const resultsProgressBar = document.getElementById('results-progress-bar');
+        const reviewContainer = document.getElementById('review-container');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Inicializar el examen
+        function inicializarExamen() {
+            // Mezclar las opciones para cada pregunta
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1, 5); // Todas las respuestas (correcta e incorrectas)
+                return [...opciones].sort(() => Math.random() - 0.5); // Mezclar opciones
+            });
+            
+            mostrarPregunta();
+            
+            // Event listeners
+            prevBtn.addEventListener('click', irPreguntaAnterior);
+            nextBtn.addEventListener('click', irPreguntaSiguiente);
+            restartBtn.addEventListener('click', reiniciarExamen);
+        }
+
+        // Mostrar la pregunta actual
+        function mostrarPregunta() {
+            // Obtener el tema de la pregunta
+            let tema = preguntas[preguntaActual][5];
+            topic.textContent = "Tema: " + tema;
+            console.log(tema);
+            // Actualizar número de pregunta y progreso
+            questionNumber.textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
+            const progreso = ((preguntaActual + 1) / preguntas.length) * 100; // Formula para sacar porcentaje 
+            progressText.textContent = `${Math.round(progreso)}% completado`;
+            progressBar.style.width = `${progreso}%`;
+            
+            // Mostrar texto de la pregunta
+            questionText.innerHTML = preguntas[preguntaActual][0];
+            
+            // Generar opciones
+            optionsContainer.innerHTML = '';
+            opcionesMezcladas[preguntaActual].forEach((opcion, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = `option ${respuestas[preguntaActual] === opcion ? 'selected' : ''}`;
+                optionDiv.dataset.value = opcion;
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" id="option-${index}" name="question-option" 
+                           ${respuestas[preguntaActual] === opcion ? 'checked' : ''}>
+                    <label for="option-${index}">${opcion}</label>
+                `;
+                
+                optionDiv.addEventListener('click', () => seleccionarOpcion(opcion));
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Actualizar estado de los botones
+            prevBtn.disabled = preguntaActual === 0;
+            nextBtn.disabled = !respuestas[preguntaActual];
+            
+            if (preguntaActual === preguntas.length - 1) {
+                nextBtn.textContent = 'Finalizar';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+
+        // Seleccionar una opción
+        function seleccionarOpcion(opcion) {
+            respuestas[preguntaActual] = opcion;
+            
+            // Actualizar UI
+            document.querySelectorAll('.option').forEach(el => {
+                el.classList.remove('selected');
+                if (el.dataset.value === opcion) {
+                    el.classList.add('selected');
+                    el.querySelector('input').checked = true;
+                }
+            });
+            
+            nextBtn.disabled = false;
+        }
+
+        // Ir a la pregunta anterior
+        function irPreguntaAnterior() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta();
+            }
+        }
+
+        // Ir a la siguiente pregunta
+        function irPreguntaSiguiente() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta();
+            } else {
+                mostrarResultados();
+            }
+        }
+
+        // Mostrar resultados
+        function mostrarResultados() {
+            examCard.style.display = 'none';
+            resultsCard.style.display = 'block';
+            
+            // Calcular puntuación
+            let puntos = 0;
+            respuestas.forEach((respuesta, index) => {
+                if (respuesta === preguntas[index][1]) {
+                    puntos++;
+                }
+            });
+            
+            const porcentaje = (puntos / preguntas.length) * 100;
+            
+            // Actualizar UI
+            scoreElement.textContent = `${puntos} / ${preguntas.length}`;
+            percentageElement.textContent = `${Math.round(porcentaje)}% de respuestas correctas`;
+            resultsProgressBar.style.width = `${porcentaje}%`;
+            
+            // Generar revisión de respuestas
+            reviewContainer.innerHTML = '';
+            preguntas.forEach((pregunta, index) => {
+                const esCorrecta = respuestas[index] === pregunta[1];
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                
+                reviewItem.innerHTML = `
+                    <div class="review-question">
+                        <span class="icon ${esCorrecta ? 'icon-check' : 'icon-x'}">
+                            ${esCorrecta ? '✓' : '✗'}
+                        </span>
+                        <span>${pregunta[0]}</span>
+                    </div>
+                    <div class="review-answer">
+                        Tu respuesta: <span class="${esCorrecta ? 'correct' : 'incorrect'}">
+                            ${respuestas[index] || 'Sin respuesta'}
+                        </span>
+                    </div>
+                    ${!esCorrecta ? `
+                        <div class="review-answer">
+                            Respuesta correcta: <span class="correct">${pregunta[1]}</span>
+                        </div>
+                    ` : ''}
+                `;
+                
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+        // Reiniciar examen
+        function reiniciarExamen() {
+            preguntaActual = 0;
+            respuestas = Array(preguntas.length).fill("");
+            
+            // Mezclar opciones nuevamente
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1);
+                return [...opciones].sort(() => Math.random() - 0.5);
+            });
+            
+            // Mostrar tarjeta de examen
+            examCard.style.display = 'block';
+            resultsCard.style.display = 'none';
+            
+            mostrarPregunta();
+        }
+
+       
+        
+        // Iniciar el examen cuando cargue la página
+        document.addEventListener('DOMContentLoaded', inicializarExamen);
+    </script>
+</body>
+</html>
+
+
+<!-- Temas etapa 2-->
+<!--
+    - Medidas estadisticas
+    - Medidas estadisticas en datos no agrupados
+    - Medidas estadisticas en datoa agrupados
+    - Medidas estadisticas en datoa no agrupados
+        - Medidas de variacion
+        - Rango
+        - Desvuacion media
+        - Varianza y desviacion estandar
+        - Coeficiente de variacion
+    - Medidas estadistica en datos agrupados
+        - Medidas de variacion
+        - Varianza y desviacion estandar
+        - 
+
+-->

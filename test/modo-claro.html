@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Exámenes</title>
+    <style>
+        /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        /* Tarjeta de examen */
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-text {
+            font-size: 0.875rem;
+            color: #666;
+        }
+        
+        .progress-container {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #18181B;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        /* Opciones de respuesta */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background-color: #f9fafb;
+        }
+        
+        .option.selected {
+            background-color: #eff6ff;
+            border-color: #18181B;
+        }
+        
+        .option input {
+            margin-right: 12px;
+        }
+        
+        .option label {
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .card-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Botones */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 0.875rem;
+        }
+        
+        .btn-primary {
+            background-color: #18181B;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #18181B;
+        }
+        
+        .btn-primary:disabled {
+            background-color: #7a7a7c;
+            cursor: not-allowed;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f9fafb;
+        }
+        
+        .btn-outline:disabled {
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        /* Resultados */
+        .results-summary {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .percentage {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+        
+        .review-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .review-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .review-question {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .review-answer {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-left: 24px;
+        }
+        
+        .correct {
+            color: #10b981;
+            font-weight: 500;
+        }
+        
+        .incorrect {
+            color: #ef4444;
+            font-weight: 500;
+        }
+        
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .icon-check {
+            color: #10b981;
+        }
+        
+        .icon-x {
+            color: #ef4444;
+        }
+        
+        .full-width-btn {
+            width: 100%;
+        }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            .card-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Exámenes</h1>
+        
+        <div class="card" id="exam-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span id="question-number">Pregunta 1 de 5</span>
+                    <span class="progress-text" id="progress-text">20% completado</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 20%"></div>
+                </div>
+            </div>
+            
+            <div class="card-content">
+                <h2 class="question" id="question-text">¿Cuál es la capital de Francia?</h2>
+                
+                <div class="options" id="options-container">
+                    <!-- Las opciones se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <button class="btn btn-outline" id="prev-btn" disabled>Anterior</button>
+                <button class="btn btn-primary" id="next-btn" disabled>Siguiente</button>
+            </div>
+        </div>
+        
+        <div class="card" id="results-card" style="display: none;">
+            <div class="card-header">
+                <div class="card-title">Resultados del Examen</div>
+                <div>Has completado el examen. Aquí están tus resultados:</div>
+            </div>
+            
+            <div class="card-content">
+                <div class="results-summary">
+                    <p class="score" id="score">0 / 5</p>
+                    <p class="percentage" id="percentage">0% de respuestas correctas</p>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="results-progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="review-section" style="margin-top: 30px;">
+                    <h3 class="review-title">Revisión de respuestas:</h3>
+                    <div id="review-container">
+                        <!-- Los resultados se generarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <button class="btn btn-primary full-width-btn" id="restart-btn">Reiniciar Examen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estructura de preguntas: [pregunta, respuesta correcta, respuesta incorrecta 1, 2, 3...]
+        const preguntas = [
+            ["¿Cuál es la capital de Francia?", "París", "Londres", "Madrid", "Berlín"],
+            ["¿Cuántos lados tiene un triángulo?", "3", "4", "5", "6"],
+            ["¿Cuál es el planeta más grande del sistema solar?", "Júpiter", "Saturno", "Tierra", "Marte"],
+            ["¿Quién escribió Don Quijote de la Mancha?", "Miguel de Cervantes", "Federico García Lorca", "Gabriel García Márquez", "Pablo Neruda"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+            ["¿Cuál es el elemento químico con símbolo H?", "Hidrógeno", "Helio", "Hierro", "Hafnio"],
+        ];
+
+        // Variables globales
+        let preguntaActual = 0;
+        let respuestas = Array(preguntas.length).fill("");
+        let opcionesMezcladas = [];
+
+        // Elementos del DOM
+        const examCard = document.getElementById('exam-card');
+        const resultsCard = document.getElementById('results-card');
+        const questionNumber = document.getElementById('question-number');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreElement = document.getElementById('score');
+        const percentageElement = document.getElementById('percentage');
+        const resultsProgressBar = document.getElementById('results-progress-bar');
+        const reviewContainer = document.getElementById('review-container');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Inicializar el examen
+        function inicializarExamen() {
+            // Mezclar las opciones para cada pregunta
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1); // Todas las respuestas (correcta e incorrectas)
+                return [...opciones].sort(() => Math.random() - 0.5); // Mezclar opciones
+            });
+            
+            mostrarPregunta();
+            
+            // Event listeners
+            prevBtn.addEventListener('click', irPreguntaAnterior);
+            nextBtn.addEventListener('click', irPreguntaSiguiente);
+            restartBtn.addEventListener('click', reiniciarExamen);
+        }
+
+        // Mostrar la pregunta actual
+        function mostrarPregunta() {
+            // Actualizar número de pregunta y progreso
+            questionNumber.textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
+            const progreso = ((preguntaActual + 1) / preguntas.length) * 100; // Formula para sacar porcentaje 
+            progressText.textContent = `${Math.round(progreso)}% completado`;
+            progressBar.style.width = `${progreso}%`;
+            
+            // Mostrar texto de la pregunta
+            questionText.textContent = preguntas[preguntaActual][0];
+            
+            // Generar opciones
+            optionsContainer.innerHTML = '';
+            opcionesMezcladas[preguntaActual].forEach((opcion, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = `option ${respuestas[preguntaActual] === opcion ? 'selected' : ''}`;
+                optionDiv.dataset.value = opcion;
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" id="option-${index}" name="question-option" 
+                           ${respuestas[preguntaActual] === opcion ? 'checked' : ''}>
+                    <label for="option-${index}">${opcion}</label>
+                `;
+                
+                optionDiv.addEventListener('click', () => seleccionarOpcion(opcion));
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Actualizar estado de los botones
+            prevBtn.disabled = preguntaActual === 0;
+            nextBtn.disabled = !respuestas[preguntaActual];
+            
+            if (preguntaActual === preguntas.length - 1) {
+                nextBtn.textContent = 'Finalizar';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+
+        // Seleccionar una opción
+        function seleccionarOpcion(opcion) {
+            respuestas[preguntaActual] = opcion;
+            
+            // Actualizar UI
+            document.querySelectorAll('.option').forEach(el => {
+                el.classList.remove('selected');
+                if (el.dataset.value === opcion) {
+                    el.classList.add('selected');
+                    el.querySelector('input').checked = true;
+                }
+            });
+            
+            nextBtn.disabled = false;
+        }
+
+        // Ir a la pregunta anterior
+        function irPreguntaAnterior() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta();
+            }
+        }
+
+        // Ir a la siguiente pregunta
+        function irPreguntaSiguiente() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta();
+            } else {
+                mostrarResultados();
+            }
+        }
+
+        // Mostrar resultados
+        function mostrarResultados() {
+            examCard.style.display = 'none';
+            resultsCard.style.display = 'block';
+            
+            // Calcular puntuación
+            let puntos = 0;
+            respuestas.forEach((respuesta, index) => {
+                if (respuesta === preguntas[index][1]) {
+                    puntos++;
+                }
+            });
+            
+            const porcentaje = (puntos / preguntas.length) * 100;
+            
+            // Actualizar UI
+            scoreElement.textContent = `${puntos} / ${preguntas.length}`;
+            percentageElement.textContent = `${Math.round(porcentaje)}% de respuestas correctas`;
+            resultsProgressBar.style.width = `${porcentaje}%`;
+            
+            // Generar revisión de respuestas
+            reviewContainer.innerHTML = '';
+            preguntas.forEach((pregunta, index) => {
+                const esCorrecta = respuestas[index] === pregunta[1];
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                
+                reviewItem.innerHTML = `
+                    <div class="review-question">
+                        <span class="icon ${esCorrecta ? 'icon-check' : 'icon-x'}">
+                            ${esCorrecta ? '✓' : '✗'}
+                        </span>
+                        <span>${pregunta[0]}</span>
+                    </div>
+                    <div class="review-answer">
+                        Tu respuesta: <span class="${esCorrecta ? 'correct' : 'incorrect'}">
+                            ${respuestas[index] || 'Sin respuesta'}
+                        </span>
+                    </div>
+                    ${!esCorrecta ? `
+                        <div class="review-answer">
+                            Respuesta correcta: <span class="correct">${pregunta[1]}</span>
+                        </div>
+                    ` : ''}
+                `;
+                
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+        // Reiniciar examen
+        function reiniciarExamen() {
+            preguntaActual = 0;
+            respuestas = Array(preguntas.length).fill("");
+            
+            // Mezclar opciones nuevamente
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1);
+                return [...opciones].sort(() => Math.random() - 0.5);
+            });
+            
+            // Mostrar tarjeta de examen
+            examCard.style.display = 'block';
+            resultsCard.style.display = 'none';
+            
+            mostrarPregunta();
+        }
+
+        // Iniciar el examen cuando cargue la página
+        document.addEventListener('DOMContentLoaded', inicializarExamen);
+    </script>
+</body>
+</html>

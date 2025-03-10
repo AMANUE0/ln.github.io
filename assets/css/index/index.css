@@ -1,101 +1,4 @@
-
-
-:root {
-    --color: #333333;
-    --bg-1: white;
-    --bg-2: #E0E0E0;
-    --bg-3: #d4d4d4;
-    --bg-4: black;
-    --font: inter GOOGLE;
-}
-
-.dark-mode {
-    --color: white;
-    --bg-1: #1f1e1e;
-    --bg-2: #333232;
-    --bg-3: #3b3b3b;
-    --bg-4: black;
-    
-}
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: var(--bg-1);
-    color: var(--color);
-    font-family: var(--font);
-    margin: 0;
-    transition: background .5s, color .5s;
-}
-html, body {
-    overflow-x: hidden;
-}
-p {
-    color: #a5a4a4;
-    font-weight: bold;
-}
-header {
-    background-color: var(--bg-2);
-    color: var(--color);
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-header > section {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
-.menu {
-    background-color: transparent;
-    padding: 10px 10px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-}
-.logo {
-    margin: 0 10px;
-}
-.nav-content {
-}
-.hidden-menu {
-    display: none;
-}
-.nav-bar {
-    display: flex;
-    gap: 4px;
-    list-style: none;
-    width: 100%;
-}
-.nav-bar > li {
-
-}
-.nav-item {
-    display: flex;
-    text-decoration: none;
-    color: #7a7a7a;
-    transition: .5s;
-    font-weight: bold;
-    padding: 10px;
-    width: 100%;
-
-}
-.nav-item:hover {
-    cursor: pointer;
-    color: #666464;
-}
-.content {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+/*EStilos globales para clase "hero"*/
 
 .hero {
     width: 100%;
@@ -145,9 +48,10 @@ header > section {
     transform: scale(1.1);
 }
 
-/*-------------------*/
+/*Estilos para la seccion "portada introduccion" */
+
 .introduction-page {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./imagenes/LinceNexus.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../../imagenes/LinceNexus.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -167,7 +71,9 @@ header > section {
 .introduction-page > p {
     font-size: 1.2rem;
 }
-/*----------*/
+
+/*Estilos para la seccion "Informacion de la pagina" */
+
 
 .sections-1 {
     display: flex;
@@ -219,7 +125,7 @@ header > section {
 .img-section-1 {
     width: 100%;
     height: 250px;
-    background-image: url("./imagenes/background-img.png");
+    background-image: url("../../imagenes/background-img.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -228,7 +134,8 @@ header > section {
 .img-section-2 {
     width: 100%;
     height: 250px;
-    background-image: url("./imagenes/background-img.png");
+    background-image: url("../../imagenes/background-img.png");
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -238,7 +145,7 @@ header > section {
 .img-section-3 {
     width: 100%;
     height: 250px;
-    background-image: url("./imagenes/background-img.png");
+    background-image: url("../../imagenes/background-img.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -248,13 +155,15 @@ header > section {
 .img-section-4 {
     width: 100%;
     height: 250px;
-    background-image: url("./imagenes/background-img.png");
+    background-image: url("../../imagenes/background-img.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     border-radius: 15px;
 }
-/*-----TEAMS-----*//*----- TEAMS -----*/
+
+/*Estilos para la seccion "Creadores de la web" */
+
 .credits {
     background-color: var(--bg-2);
     width: 100%;
@@ -287,14 +196,9 @@ header > section {
 
 }
 
-@keyframes flotar {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-10px);
-    }
-}
+/*Estilamos el contenedor de cada integrante del equipo */
+
+
 .img-team {
     width: 60px;
     height: 60px;
@@ -337,10 +241,6 @@ header > section {
     text-decoration: none;
 }
 
-.red-social:hover {
-    transform: scale(1.1);
-    opacity: 0.8;
-}
 
 /* Colores específicos */
 .ig { color: #E4405F; }
@@ -382,83 +282,3 @@ header > section {
     background-color: var(--bg-2);
     padding: 10px;
 }
-/*----------*/
-footer {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-footer > h3 {
-    font-size: 2.5rem;
-    margin: 20px auto;
-    text-align: center;
-}
-.crown {
-    position: absolute;
-    top: 0;
-    transform: scale(1.4);
-}
-.osu {
-    width: 40px;
-    height: 40px;
-    background-color: #EC5F9E;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid white;
-    transform: scale(.9);
-    padding: 2px;
-    animation: osu .2s infinite;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-@keyframes osu {
-    from {
-        transform: scale(.9);
-    }
-    to { transform: scale(1);}
-    
-}
-@font-face {
-    font-family: "inter GOOGLE";
-    src: url('./fonts/inter/Inter-VariableFont_opsz\,wght.ttf');
-}
-@media only screen and (min-width: 800px) {
-    body {
-    }
-    .menu {display: none;}
-    header {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .nav-content {
-        display: flex;
-    }
-}
-@media only screen and (max-width: 800px) {
-    .content-btns-hero {
-        flex-direction: column;
-        margin: 15px 0;
-    }
-    header {
-    }
-    .nav-bar {
-        flex-direction: column;
-    }
-    .nav-item {
-        background-color: var(--bg-3);
-    }
-    .hero-h1 {
-        transform: scale(.45);
-    }
-    .hero-p {
-        transform: scale(.7);
-    }
-  }
