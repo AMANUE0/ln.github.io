@@ -1,0 +1,354 @@
+ /* Estilos generales */
+ * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+.img-extended {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Tarjeta de examen */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.card-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.progress-container {
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #18181B;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.card-content {
+    padding: 20px;
+    /* Añadido para manejar contenido que desborda */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.question {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    /* Añadido para manejar texto largo */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Opciones de respuesta */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    /* Añadido para manejar texto largo */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.option:hover {
+    background-color: #f9fafb;
+}
+
+.option.selected {
+    background-color: #eff6ff;
+    border-color: #18181B;
+}
+
+.option input {
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.option label {
+    cursor: pointer;
+    flex: 1;
+    /* Añadido para manejar texto largo */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.card-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Botones */
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background-color: #18181B;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #18181B;
+}
+
+.btn-primary:disabled {
+    background-color: #7a7a7c;
+    cursor: not-allowed;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.btn-outline:hover {
+    background-color: #f9fafb;
+}
+
+.btn-outline:disabled {
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Resultados */
+.results-summary {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.score {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.percentage {
+    font-size: 1.25rem;
+    color: #4b5563;
+    margin-bottom: 20px;
+}
+
+.review-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.review-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.review-question {
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    /* Añadido para manejar texto largo */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.review-answer {
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin-left: 24px;
+    /* Añadido para manejar texto largo */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.correct {
+    color: #10b981;
+    font-weight: 500;
+}
+
+.incorrect {
+    color: #ef4444;
+    font-weight: 500;
+}
+
+.icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.icon-check {
+    color: #10b981;
+}
+
+.icon-x {
+    color: #ef4444;
+}
+
+.full-width-btn {
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+#topic {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+/* Mejoras para tablas responsivas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    overflow-x: auto;
+    display: block;
+}
+
+@media (min-width: 640px) {
+    table {
+        display: table;
+    }
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+    word-break: break-word;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.numbers {
+    background-color: #e2dede;
+    padding: 2px 5px;
+    border-radius: 10px;
+    display: inline-block;
+    word-break: break-word;
+}
+.volver {
+    padding: 15px 20px;
+    margin: 20px 10px;
+    box-shadow: 0 0 5px black;
+    background-color: #18181B;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+ul {
+    background-color: #e2e2e2;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: left;
+    width: 70%;
+    padding:  5px 20px;
+    margin: 0 auto;
+    box-shadow: 0 0 8px #b4b4b4 inset;
+}
+li {
+    margin-left: 10px;
+}
+/* Responsive */
+@media (max-width: 640px) {
+    .card-footer {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .card-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .review-question {
+        flex-direction: column;
+    }
+    
+    .review-answer {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+}

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Solucion de conflictos | Examen medio termino</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Examen medio termino</h1>
+        <a href="../../../asignaturas/index.html" class="volver">Volver</a>
+        <div class="card" id="exam-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span id="question-number">Pregunta 1 de 5</span>
+                    <span class="progress-text" id="progress-text">20% completado</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 20%"></div>
+                </div>
+            </div>
+            
+            <div class="card-content">
+                <h1 id="topic"></h1>
+                <h2 class="question" id="question-text">¿Cuál es la capital de Francia?</h2>
+                
+                <div class="options" id="options-container">
+                    <!-- Las opciones se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <button class="btn btn-outline" id="prev-btn" disabled>Anterior</button>
+                <button class="btn btn-primary" id="next-btn" disabled>Siguiente</button>
+            </div>
+        </div>
+        
+        <div class="card" id="results-card" style="display: none;">
+            <div class="card-header">
+                <div class="card-title">Resultados del Examen</div>
+                <div>Has completado el examen. Aquí están tus resultados:</div>
+            </div>
+            
+            <div class="card-content">
+                <div class="results-summary">
+                    <p class="score" id="score">0 / 5</p>
+                    <p class="percentage" id="percentage">0% de respuestas correctas</p>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="results-progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="review-section" style="margin-top: 30px;">
+                    <h3 class="review-title">Revisión de respuestas:</h3>
+                    <div id="review-container">
+                        <!-- Los resultados se generarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="card-footer">
+                <button class="btn btn-primary full-width-btn" id="restart-btn">Reiniciar Examen</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script> // evento extender imagen
+    // Estructura de preguntas: [pregunta, respuesta correcta, respuesta incorrecta 1, 2, 3...]
+    const preguntas = [
+        ["¿Cuales son las caracteristicas de las emociones?", "\
+        <ul>\
+            <li>Son breves</li>\
+            <li>Son perturbaciones</li>\
+            <li>Se asocian a una exprecion facial</li>\
+            <li>Etcetera</li>\
+            </ul>\
+        ", "\
+         <ul>\
+            <li>Son interactivas</li>\
+            <li>Son estimulos</li>\
+            <li>Se perciben</li>\
+            </ul>", "Ninguna de las anteriores","Emociones y sentimientos"],
+        ["¿Cuales son las caracteristicas del conflicto?", "\
+        <ul>\
+            <li>Impreciso</li>\
+            <li>Inestable</li>\
+            <li>Inesperado</li>\
+            <li>Complejo</li>\
+            <li>Dinamico</li>\
+            <li>Genera cambio</li>\
+            <li>Conductual</li>\
+        </ul>\
+        ", "\
+         <ul>\
+            <li>Estable</li>\
+            <li>Confiable</li>\
+            <li>Amabilidad</li>\
+            <li>Dinfucional</li>\
+        </ul>", "\
+         <ul>\
+            <li>Funcional</li>\
+            <li>Inestable</li>\
+            <li>Complejo</li>\
+            <li>Personal</li>\
+            <li>Difuncional</li>\
+            <li>Dinamico</li>\
+        </ul>", "Ninguna de las anteriores", "Caracteristicas del conflicto."],
+        ["¿Cuales son los tipos de conflictos?", "\
+        <ul>\
+            <li>Intrapersonal</li>\
+            <li>interpersonal</li>\
+            <li>intragrupal</li>\
+            <li>intergrupal</li>\
+        </ul>\
+        ", "\
+        <ul>\
+            <li>Personal</li>\
+            <li>interpersonal</li>\
+            <li>intragrupal</li>\
+            <li>intergrupal</li>\
+        </ul>"],
+        ["Son aquellos que se presentan entre iguales.", "Conflictos horizontales.", "Conflictos verticales", "Conflictos", "Emociones", "Tipos de conflicto segun su jerarquia."],
+
+        ["Son los que surgen entre personas que desempeñan funciones jerarquicamente distintas.", "Conflictos verticales.",  "Conflictos horizontales", "Conflictos", "Emociones", "Tipos de conflicto segun su jerarquia"],
+
+        ["Son reacciones a un estimulo intenso o externo que conlleva a la expresion verbal o no verbal, positiva o negativa de la persona.", "Emociones", "Estimulos", "Conflictos", "Percepciones", "Emociones y sentimiento"],
+
+        ["¿Cuales son los elementos del conflicto?", "Personas - Problema - Proceso", "Intrapersonal - Personal - Intragrupal", "Grupal - Difuncional- Intragrupal", "Ninguna de las anteriores"],
+        ["Esta clase del conflicto se basa en diferencias bien conocidas y entendidas entre intereses, opiniones, percepciones, e interpretaciones.", "Real", "Irreal", "Funcional", "Disfuincional" ,"Clases del conflicto."],
+        ["La percepcion es un proceso activo - constructivo en el que el perceptor construye un esquema informativo anticipatorio que le permite contrastar el estimulo y aceptarlo o rechazarlo segun se adecue o no a lo propuesto por el esquema. Responde Falso / Verdadero", "Verdadero", "Falso"],
+        
+        ["Conflicto sobre como debe hacerse el trabajo.", "Conflicto de Proceso", "Conflicto Funcional", "Conflicto de relacion", "Conflicto de tarea", "Tipos de conflicto en el ambito laboral."],
+        ["Conflicto basado en las relaciones interpersonales.", "Conflicto de relacion", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de tarea", "Tipos de conflicto en el ambito laboral."],
+        ["Conflicto sobre el contenido y metas del trabajo", "Conflicto de Tarea", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
+        ["Conflicto que dificulta el progreso del grupo..", "Conflicto Disfuncional", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
+        ["Conflicto que apoya las metas del grupo y mejora su desempeño.", "Conflicto Funcional", "Conflicto Disfuncional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
+        ["Se manifiesta a traves de conductas. A esto se le llama conflicto..","Directo","Estructural","Cultural","Emocional", "Tipos de conflictos deacuerdo con el tipo de violencia."],
+        ["Se preesenta en las estructuras de las diversas organizaciones y es generado por las propias normas establecidas por la organizacion. A esto se le llama conflicto ..", "Estructual", "Directo", "Cultural", "Socio cultural", "Tipos de conflicto de acuerdo con el tipo de violencia."],
+        ["Hace referencia a la expresion ideologica del conflicto estructural, es decir, a la cultura interna de las organizaciones que justifican y preservan su estructura mediante codigos de comportamientos o actitudes. A esto se le llama conflicto..", "Cultural", "Estructural", "Directo","Emocional" , "Tipos de conflictos de acuerdo con el tipo de violencia."],
+        ["Hacen referencia a las ideas, valores, conceptualizaciones y l acumulo de informacion y percepciones que contribuyen a dotarnos de un pensamiento determinado.", "Ideologicos", "Transicion", "Legitimidad", "Ninguna de las anteriores", "Tipos de conflictos segun aspectos sociopoliticos."],
+        ["Son aquellos que se presentan en momentos de cambio politicoo de cualquier otro tipo, para establecer las luchas entre potencias rivales con la finalidad de que una de ellas se haga con el poder. Estamos hablando de..", "Transicion", "Ideologicos", "Legitimidad", "Fisoloficos", "Tipos de conflictos segun aspectos sociopoliticos."],
+        ["Se refiere a aquellos que surgen como consecuencia de la falta de legitimidad, de la ausencia de participacion politica o de problemas en la distribucion del bienestar. Estamos hablando de..", "La Legitimidad", "La Transicion", "Ideologicos", "Conflicro irracional", "Ninguna de las anteriores", "Tipos de conflictos segun sociopoliticos."],
+        ["Son aquellos donde las dos partes son identificadas y reconocen la existencia del conflicto, pero si no se lleva unprocedimiento de regulacion se puede producir una fuerte escalada. Estamos hablando de..", "Conflictos Emergentes", "Conflictos Latentes", "Conflictos sociales", "Conflictos emocionales", "Tipos de conflicto segun su aparicion"],
+        ["Aquellos donde las tensiones basicas todavia no se han desarrollado por completo. Estamos hablando de..", "Conflictos Latentes", "Conflictos Emergentes", "Conflictos disfuncionales",  "Conflictos Emocionales", "Tipos de conflictos segun su aparicion."],
+        
+        ["Hace referencia al enfrentamiento entre distintos grupos u organismos sociales en defensa de sus intereses en virtud del opuesto que ocupan en la estructura social.", "Conflicto social", "Conflicto cultura", "Conflicto personal", "conflicto disfuncinoal", "none"],
+        
+        ["¿Cuales son las etapas del conflicto?", "\
+        <ul>\
+            <li>Etapa 1 ( Conocimiento )</li>\
+            <li>Etapa 2 ( Diagnostico )</li>\
+            <li>Etapa 3 ( Reduccion )</li>\
+            <li>Etapa 4 ( Solucion )</li>\
+        </ul>\
+    ", "\
+    <ul>\
+            <li>Etapa 1 ( Conocimiento )</li>\
+            <li>Etapa 2 ( Emociones )</li>\
+            <li>Etapa 3 ( Placer )</li>\
+            <li>Etapa 4 ( Justicia )</li>\
+        </ul>", "Ninguna de las anteriores"],
+        ["Segun Thomas. ¿Como define el el conflicto?", "Un proceso interactivo que como cualquier otro incluye las perceptiones, emociones, conductas y resultados de las partes intervinientes.", "Convivencia en equipo", "Estimulos", "Ninguna de las anteriores", "Generalidades del conflicto."],
+        ["¿Que es el conflicto?","Es una situacion en la que dos o mas personas perciben que sus posiciones o intereses estan contrapuestos.", "Son las partes del conflicto, delimitan a quien le corresponde solventar o solucionar el conflicto.", "Es el proceso en el que dos personas se aman,", "Relaciones a distncia", "Generalidades del conflicto."],
+        ["Deriva del latin con- fictus, que a su vez proviene de confligere, que significa chocar, combatir, luchar o pelear. ¿Estamos hablando de?","Conflicto", "Proceso", "Lucha", "Confianza", "Generalidades del conflicto."],
+    ];
+
+        
+
+        // Variables globales
+        let preguntaActual = 0;
+        let respuestas = Array(preguntas.length).fill("");
+        let opcionesMezcladas = [];
+
+        // Elementos del DOM
+        const examCard = document.getElementById('exam-card');
+        const resultsCard = document.getElementById('results-card');
+        const topic = document.getElementById('topic');
+        const questionNumber = document.getElementById('question-number');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreElement = document.getElementById('score');
+        const percentageElement = document.getElementById('percentage');
+        const resultsProgressBar = document.getElementById('results-progress-bar');
+        const reviewContainer = document.getElementById('review-container');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Inicializar el examen
+        function inicializarExamen() {
+            // Mezclar las opciones para cada pregunta
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1, 5); // Todas las respuestas (correcta e incorrectas)
+                return [...opciones].sort(() => Math.random() - 0.5); // Mezclar opciones
+            });
+            
+            mostrarPregunta();
+            
+            // Event listeners
+            prevBtn.addEventListener('click', irPreguntaAnterior);
+            nextBtn.addEventListener('click', irPreguntaSiguiente);
+            restartBtn.addEventListener('click', reiniciarExamen);
+        }
+
+        // Mostrar la pregunta actual
+        function mostrarPregunta() {
+            // Obtener el tema de la pregunta
+            let tema = preguntas[preguntaActual][5];
+            if (tema == undefined) {
+            }
+            else {
+                topic.textContent = "Tema: " + tema;
+            }
+            // Actualizar número de pregunta y progreso
+            questionNumber.textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
+            const progreso = ((preguntaActual + 1) / preguntas.length) * 100; // Formula para sacar porcentaje 
+            progressText.textContent = `${Math.round(progreso)}% completado`;
+            progressBar.style.width = `${progreso}%`;
+            
+            // Mostrar texto de la pregunta
+            questionText.innerHTML = preguntas[preguntaActual][0];
+            
+            // Generar opciones
+            optionsContainer.innerHTML = '';
+            opcionesMezcladas[preguntaActual].forEach((opcion, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = `option ${respuestas[preguntaActual] === opcion ? 'selected' : ''}`;
+                optionDiv.dataset.value = opcion;
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" id="option-${index}" name="question-option" 
+                           ${respuestas[preguntaActual] === opcion ? 'checked' : ''}>
+                    <label for="option-${index}">${opcion}</label>
+                `;
+                
+                optionDiv.addEventListener('click', () => seleccionarOpcion(opcion));
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Actualizar estado de los botones
+            prevBtn.disabled = preguntaActual === 0;
+            nextBtn.disabled = !respuestas[preguntaActual];
+            
+            if (preguntaActual === preguntas.length - 1) {
+                nextBtn.textContent = 'Finalizar';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+
+        // Seleccionar una opción
+        function seleccionarOpcion(opcion) {
+            respuestas[preguntaActual] = opcion;
+            
+            // Actualizar UI
+            document.querySelectorAll('.option').forEach(el => {
+                el.classList.remove('selected');
+                if (el.dataset.value === opcion) {
+                    el.classList.add('selected');
+                    el.querySelector('input').checked = true;
+                }
+            });
+            
+            nextBtn.disabled = false;
+        }
+
+        // Ir a la pregunta anterior
+        function irPreguntaAnterior() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta();
+            }
+        }
+
+        // Ir a la siguiente pregunta
+        function irPreguntaSiguiente() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta();
+            } else {
+                mostrarResultados();
+            }
+        }
+
+        // Mostrar resultados
+        function mostrarResultados() {
+            examCard.style.display = 'none';
+            resultsCard.style.display = 'block';
+            
+            // Calcular puntuación
+            let puntos = 0;
+            respuestas.forEach((respuesta, index) => {
+                if (respuesta === preguntas[index][1]) {
+                    puntos++;
+                }
+            });
+            
+            const porcentaje = (puntos / preguntas.length) * 100;
+            
+            // Actualizar UI
+            scoreElement.textContent = `${puntos} / ${preguntas.length}`;
+            percentageElement.textContent = `${Math.round(porcentaje)}% de respuestas correctas`;
+            resultsProgressBar.style.width = `${porcentaje}%`;
+            
+            // Generar revisión de respuestas
+            reviewContainer.innerHTML = '';
+            preguntas.forEach((pregunta, index) => {
+                const esCorrecta = respuestas[index] === pregunta[1];
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                
+                reviewItem.innerHTML = `
+                    <div class="review-question">
+                        <span class="icon ${esCorrecta ? 'icon-check' : 'icon-x'}">
+                            ${esCorrecta ? '✓' : '✗'}
+                        </span>
+                        <span>${pregunta[0]}</span>
+                    </div>
+                    <div class="review-answer">
+                        Tu respuesta: <span class="${esCorrecta ? 'correct' : 'incorrect'}">
+                            ${respuestas[index] || 'Sin respuesta'}
+                        </span>
+                    </div>
+                    ${!esCorrecta ? `
+                        <div class="review-answer">
+                            Respuesta correcta: <span class="correct">${pregunta[1]}</span>
+                        </div>
+                    ` : ''}
+                `;
+                
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+        // Reiniciar examen
+        function reiniciarExamen() {
+            preguntaActual = 0;
+            respuestas = Array(preguntas.length).fill("");
+            
+            // Mezclar opciones nuevamente
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1);
+                return [...opciones].sort(() => Math.random() - 0.5);
+            });
+            
+            // Mostrar tarjeta de examen
+            examCard.style.display = 'block';
+            resultsCard.style.display = 'none';
+            
+            mostrarPregunta();
+        }
+
+       
+        
+        // Iniciar el examen cuando cargue la página
+        document.addEventListener('DOMContentLoaded', inicializarExamen);
+    </script>
+</body>
+</html>
+
+
+<!-- Temas etapa 2-->
+<!--
+    - Medidas estadisticas
+    - Medidas estadisticas en datos no agrupados
+    - Medidas estadisticas en datoa agrupados
+    - Medidas estadisticas en datoa no agrupados
+        - Medidas de variacion
+        - Rango
+        - Desvuacion media
+        - Varianza y desviacion estandar
+        - Coeficiente de variacion
+    - Medidas estadistica en datos agrupados
+        - Medidas de variacion
+        - Varianza y desviacion estandar
+        - 
+
+-->
