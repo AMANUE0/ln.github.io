@@ -177,6 +177,10 @@ h1 {
     cursor: not-allowed;
 }
 
+.show-answer {
+    
+}
+
 /* Resultados */
 .results-summary {
     text-align: center;

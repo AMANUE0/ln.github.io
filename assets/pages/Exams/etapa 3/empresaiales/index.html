@@ -4,7 +4,367 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
-    <title>Solucion de conflictos | Examen medio termino</title>
+    <title>Empresariales | Examen segundo parcial</title>
+    <style>
+                /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .img-extended {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* Tarjeta de examen */
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .progress-container {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #18181B;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .card-content {
+            padding: 20px;
+            /* Añadido para manejar contenido que desborda */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Opciones de respuesta */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .option:hover {
+            background-color: #f9fafb;
+        }
+
+        .option.selected {
+            background-color: #eff6ff;
+            border-color: #18181B;
+        }
+
+        .option input {
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .card-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: #18181B;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #18181B;
+        }
+
+        .btn-primary:disabled {
+            background-color: #7a7a7c;
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+
+        .btn-outline:hover {
+            background-color: #f9fafb;
+        }
+
+        .btn-outline:disabled {
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .show-answer {
+            
+        }
+
+        /* Resultados */
+        .results-summary {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .percentage {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+
+        .review-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .review-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .review-question {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .review-answer {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-left: 24px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .correct {
+            color: #10b981;
+            font-weight: 500;
+        }
+
+        .incorrect {
+            color: #ef4444;
+            font-weight: 500;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .icon-check {
+            color: #10b981;
+        }
+
+        .icon-x {
+            color: #ef4444;
+        }
+
+        .full-width-btn {
+            width: 100%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        #topic {
+            margin: 0;
+            padding: 0;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        /* Mejoras para tablas responsivas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            display: block;
+        }
+
+        @media (min-width: 640px) {
+            table {
+                display: table;
+            }
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+            word-break: break-word;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .numbers {
+            background-color: #e2dede;
+            padding: 2px 5px;
+            border-radius: 10px;
+            display: inline-block;
+            word-break: break-word;
+        }
+        .volver {
+            padding: 15px 20px;
+            margin: 20px 10px;
+            box-shadow: 0 0 5px black;
+            background-color: #18181B;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        ul {
+            background-color: #e2e2e2;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: left;
+            width: 70%;
+            padding:  5px 20px;
+            margin: 0 auto;
+            box-shadow: 0 0 8px #b4b4b4 inset;
+        }
+        li {
+            margin-left: 10px;
+        }
+        /* Responsive */
+        @media (max-width: 640px) {
+            .card-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .card-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .review-question {
+                flex-direction: column;
+            }
+            
+            .review-answer {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -71,65 +431,7 @@
     <script> // evento extender imagen
     // Estructura de preguntas: [pregunta, respuesta correcta, respuesta incorrecta 1, 2, 3...]
     const preguntas = [
-        ["Esta clase del conflicto se basa en diferencias bien conocidas y entendidas entre intereses, opiniones, percepciones, e interpretaciones.", "Real", "Irreal", "Funcional", "Disfuincional" ,"Clases del conflicto."],
-        ["La percepcion es un proceso activo - constructivo en el que el perceptor construye un esquema informativo anticipatorio que le permite contrastar el estimulo y aceptarlo o rechazarlo segun se adecue o no a lo propuesto por el esquema. Responde Falso / Verdadero", "Verdadero", "Falso"],
-        ["¿Cuales son las caracteristicas de las emociones?", "\
-        <ul>\
-            <li>Son breves</li>\
-            <li>Son perturbaciones</li>\
-            <li>Se asocian a una exprecion facial</li>\
-            <li>Etcetera</li>\
-            </ul>\
-        ", "", "", "","Emociones y sentimientos"],
-        ["Son reacciones a un estimulo intenso o externo que conlleva a la expresion verbal o no verbal, positiva o negativa de la persona.", "Emociones", "", "", "", "Emociones y sentimiento"],
-        ["Conflicto sobre como debe hacerse el trabajo.", "Conflicto de Proceso", "Conflicto Funcional", "Conflicto de relacion", "Conflicto de tarea", "Tipos de conflicto en el ambito laboral."],
-        ["Conflicto basado en las relaciones interpersonales.", "Conflicto de relacion", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de tarea", "Tipos de conflicto en el ambito laboral."],
-        ["Conflicto sobre el contenido y metas del trabajo", "Conflicto de Tarea", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
-        ["Conflicto que dificulta el progreso del grupo..", "Conflicto Disfuncional", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
-        ["Conflicto que apoya las metas del grupo y mejora su desempeño.", "Conflicto Funcional", "Conflicto Disfuncional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
-        ["Se manifiesta a traves de conductas. A esto se le llama conflicto..","Directo","Estructural","Cultural","", "Tipos de conflictos deacuerdo con el tipo de violencia."],
-        ["Se preesenta en las estructuras de las diversas organizaciones y es generado por las propias normas establecidas por la organizacion. A esto se le llama conflicto ..", "Estructual", "Directo", "Cultural", "", "Tipos de conflicto de acuerdo con el tipo de violencia."],
-        ["Hace referencia a la expresion ideologica del conflicto estructural, es decir, a la cultura interna de las organizaciones que justifican y preservan su estructura mediante codigos de comportamientos o actitudes. A esto se le llama conflicto..", "Cultural", "Estructural", "Directo", "", "Tipos de conflictos de acuerdo con el tipo de violencia."],
-        ["Son los que surgen entre personas que desempeñan funciones jerarquicamente distintas.", "Conflictos verticales.",  "", "", "", "", "Tipos de conflicto segun su jerarquia"],
-        ["Son aquellos que se presentan entre iguales.", "Conflictos horizontales.", "Conflictos", "", "", "", "Tipos de conflicto segun su jerarquia."],
-        ["Hacen referencia a las ideas, valores, conceptualizaciones y l acumulo de informacion y percepciones que contribuyen a dotarnos de un pensamiento determinado.", "Ideologicos", "Transicion", "Legitimidad", "", "Tipos de conflictos segun aspectos sociopoliticos."],
-        ["Son aquellos que se presentan en momentos de cambio politicoo de cualquier otro tipo, para establecer las luchas entre potencias rivales con la finalidad de que una de ellas se haga con el poder. Estamos hablando de..", "Transicion", "Ideologicos", "Legitimidad", "", "", "Tipos de conflictos segun aspectos sociopoliticos."],
-        ["Se refiere a aquellos que surgen como consecuencia de la falta de legitimidad, de la ausencia de participacion politica o de problemas en la distribucion del bienestar. Estamos hablando de..", "La Legitimidad", "La Transicion", "Ideologicos", "", "", "Tipos de conflictos segun sociopoliticos."],
-        ["Son aquellos donde las dos partes son identificadas y reconocen la existencia del conflicto, pero si no se lleva unprocedimiento de regulacion se puede producir una fuerte escalada. Estamos hablando de..", "Conflictos Emergentes", "Conflictos Latentes", "", "", "", "Tipos de conflicto segun su aparicion"],
-        ["Aquellos donde las tensiones basicas todavia no se han desarrollado por completo. Estamos hablando de..", "Conflictos Latentes", "Conflictos Emergentes", "", "", "", "Tipos de conflictos segun su aparicion."],
-        ["¿Cuales son los tipos de conflictos?", "\
-        <ul>\
-            <li>Intrapersonal</li>\
-            <li>interpersonal</li>\
-            <li>intragrupal</li>\
-            <li>intergrupal</li>\
-        </ul>\
-        ", "", "", "", "Tipos de conflicto"],
-        ["Hace referencia al enfrentamiento entre distintos grupos u organismos sociales en defensa de sus intereses en virtud del opuesto que ocupan en la estructura social.", "Conflicto social", "", "", "", "none"],
-        ["¿Cuales son las caracteristicas del conflicto?", "\
-        <ul>\
-            <li>Impreciso</li>\
-            <li>Inestable</li>\
-            <li>Inesperado</li>\
-            <li>Complejo</li>\
-            <li>Dinamico</li>\
-            <li>Genera cambio</li>\
-            <li>Conductual</li>\
-        </ul>\
-        ", "", "", "", "Caracteristicas del conflicto."],
-        ["¿Cuales son las etapas del conflicto?", "\
-        <ul>\
-            <li>Etapa 1 ( Conocimiento )</li>\
-            <li>Etapa 2 ( Diagnostico )</li>\
-            <li>Etapa 3 ( Reduccion )</li>\
-            <li>Etapa 4 ( Solucion )</li>\
-        </ul>\
-    ", "", "", "", "Etapas del conflicto"],
-        ["Segun Thomas. ¿Como define el el conflicto?", "Un proceso interactivo que como cualquier otro incluye las perceptiones, emociones, conductas y resultados de las partes intervinientes.", "", "", "", "Generalidades del conflicto."],
-        ["¿Cuales son los elementos del conflicto?", "Personas - Problema - Proceso", "", "", ""],
-        ["¿Que es el conflicto?","Es una situacion en la que dos o mas personas perciben que sus posiciones o intereses estan contrapuestos.", "Son las partes del conflicto, delimitan a quien le corresponde solventar o solucionar el conflicto.", "", "", "Generalidades del conflicto."],
-        ["Deriva del latin con- fictus, que a su vez proviene de confligere, que significa chocar, combatir, luchar o pelear. ¿Estamos hablando de?","Conflicto", "Proceso", "Lucha", "Confianza", "Generalidades del conflicto."],
-        ["","", "", "", "", ""],
+        ["Pregunta", "Respuesta correcta", "Respuesta incorrecta 1", "Respuesta incorrecta 2", "Respuesta incorrecta 3", "Tema"],
     ];
 
         
@@ -329,21 +631,3 @@
 </body>
 </html>
 
-
-<!-- Temas etapa 2-->
-<!--
-    - Medidas estadisticas
-    - Medidas estadisticas en datos no agrupados
-    - Medidas estadisticas en datoa agrupados
-    - Medidas estadisticas en datoa no agrupados
-        - Medidas de variacion
-        - Rango
-        - Desvuacion media
-        - Varianza y desviacion estandar
-        - Coeficiente de variacion
-    - Medidas estadistica en datos agrupados
-        - Medidas de variacion
-        - Varianza y desviacion estandar
-        - 
-
--->

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Mi conexion... | Examen segundo parcial</title>
+    <style>
+                /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .img-extended {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* Tarjeta de examen */
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .progress-container {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #18181B;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .card-content {
+            padding: 20px;
+            /* Añadido para manejar contenido que desborda */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Opciones de respuesta */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .option:hover {
+            background-color: #f9fafb;
+        }
+
+        .option.selected {
+            background-color: #eff6ff;
+            border-color: #18181B;
+        }
+
+        .option input {
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .card-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: #18181B;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #18181B;
+        }
+
+        .btn-primary:disabled {
+            background-color: #7a7a7c;
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+
+        .btn-outline:hover {
+            background-color: #f9fafb;
+        }
+
+        .btn-outline:disabled {
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .show-answer {
+            
+        }
+
+        /* Resultados */
+        .results-summary {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .percentage {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+
+        .review-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .review-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .review-question {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .review-answer {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-left: 24px;
+            /* Añadido para manejar texto largo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .correct {
+            color: #10b981;
+            font-weight: 500;
+        }
+
+        .incorrect {
+            color: #ef4444;
+            font-weight: 500;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .icon-check {
+            color: #10b981;
+        }
+
+        .icon-x {
+            color: #ef4444;
+        }
+
+        .full-width-btn {
+            width: 100%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        #topic {
+            margin: 0;
+            padding: 0;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        /* Mejoras para tablas responsivas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            display: block;
+        }
+
+        @media (min-width: 640px) {
+            table {
+                display: table;
+            }
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+            word-break: break-word;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .numbers {
+            background-color: #e2dede;
+            padding: 2px 5px;
+            border-radius: 10px;
+            display: inline-block;
+            word-break: break-word;
+        }
+        .volver {
+            padding: 15px 20px;
+            margin: 20px 10px;
+            box-shadow: 0 0 5px black;
+            background-color: #18181B;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        ul {
+            background-color: #e2e2e2;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: left;
+            width: 70%;
+            padding:  5px 20px;
+            margin: 0 auto;
+            box-shadow: 0 0 8px #b4b4b4 inset;
+        }
+        li {
+            margin-left: 10px;
+        }
+        /* Responsive */
+        @media (max-width: 640px) {
+            .card-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .card-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .review-question {
+                flex-direction: column;
+            }
+            
+            .review-answer {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Examen medio termino</h1>
+        <a href="../../../asignaturas/index.html" class="volver">Volver</a>
+        <div class="card" id="exam-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span id="question-number">Pregunta 1 de 5</span>
+                    <span class="progress-text" id="progress-text">20% completado</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 20%"></div>
+                </div>
+            </div>
+            
+            <div class="card-content">
+                <h1 id="topic"></h1>
+                <h2 class="question" id="question-text">¿Cuál es la capital de Francia?</h2>
+                
+                <div class="options" id="options-container">
+                    <!-- Las opciones se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <button class="btn btn-outline" id="prev-btn" disabled>Anterior</button>
+                <button class="btn " id="next-btn" disabled>Siguiente</button>
+            </div>
+        </div>
+        
+        <div class="card" id="results-card" style="display: none;">
+            <div class="card-header">
+                <div class="card-title">Resultados del Examen</div>
+                <div>Has completado el examen. Aquí están tus resultados:</div>
+            </div>
+            
+            <div class="card-content">
+                <div class="results-summary">
+                    <p class="score" id="score">0 / 5</p>
+                    <p class="percentage" id="percentage">0% de respuestas correctas</p>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="results-progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="review-section" style="margin-top: 30px;">
+                    <h3 class="review-title">Revisión de respuestas:</h3>
+                    <div id="review-container">
+                        <!-- Los resultados se generarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="card-footer">
+                <button class="btn btn-primary full-width-btn" id="restart-btn">Reiniciar Examen</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script> // evento extender imagen
+    // Estructura de preguntas: [pregunta, respuesta correcta, respuesta incorrecta 1, 2, 3...]
+    const preguntas = [
+    ["¿Qué palabra se utiliza para expresar habilidad o posibilidad en el presente?", "can", "must", "have to", "should", "Modal Verbs - Can"],
+    ["¿Cuál de estas opciones se utiliza para expresar obligación en el presente?", "must", "can", "should", "might", "Obligación en el presente - Must"],
+    ["¿Qué palabra se utiliza para negar una habilidad o posibilidad?", "can't", "mustn't", "shouldn't", "haven't", "Modal Verbs - Can't"],
+    ["¿Cómo se dice en inglés 'tengo que estudiar'?", "I have to study", "I must to study", "I should study", "I can study", "Verbo 'Have to'"],
+    ["¿Cuál de las siguientes es una oración con el pronombre relativo 'who'?", "The teacher who is speaking is my friend.", "The teacher which is speaking is my friend.", "The teacher whom is speaking is my friend.", "The teacher of which is speaking is my friend.", "Pronombres Relativos - Who"],
+    ["¿Qué pronombre relativo se usa para referirse a una cosa?", "which", "who", "whom", "that", "Pronombres Relativos - Which"],
+    ["¿Qué palabra indica que no tienes ninguna opción en una lista de varias?", "none", "both", "either", "neither", "Negativos - None"],
+    ["¿Cómo se traduce en inglés 'ambos chicos'?", "both boys", "both of boys", "all boys", "neither boys", "Expresiones de cantidad - Both"],
+    ["¿Cuál de estas oraciones es correcta para hablar de una obligación en el pasado?", "She had to finish her homework.", "She must finish her homework.", "She can finish her homework.", "She has to finish her homework.", "Obligación en el pasado - Had to"],
+    ["¿Cómo se utiliza 'neither' en una oración negativa?", "Neither of them likes ice cream.", "Neither of them like ice cream.", "Neither them likes ice cream.", "Neither them like ice cream.", "Negativos - Neither"],
+    ["¿Cuál de las siguientes oraciones usa correctamente 'who' como pronombre relativo?", "The man who helped me was nice.", "The man which helped me was nice.", "The man whom helped me was nice.", "The man of who helped me was nice.", "Pronombres Relativos - Who"],
+    ["¿Cómo se dice 'Debo ir al médico' en inglés?", "I must go to the doctor", "I have go to the doctor", "I must to go to the doctor", "I have to go to doctor", "Obligación - Must"],
+    ["¿Cuál es la forma correcta de usar 'must' en una afirmación?", "You must study for the exam.", "You must to study for the exam.", "You must studying for the exam.", "You musted study for the exam.", "Obligación - Must"],
+    ["¿Cómo se forma la negación de 'can' en una oración?", "I can't swim.", "I can not swim.", "I can't to swim.", "I can't swimming.", "Modal Verbs - Can't"],
+    ["¿Qué significa 'neither' cuando se utiliza en una oración?", "Ninguna de las opciones", "Ambas opciones", "Una de las opciones", "Todos los elementos", "Negativos - Neither"],
+    ["¿Cuál es la forma correcta de usar 'have to' en una pregunta?", "Do you have to work today?", "You have to work today?", "Have you to work today?", "Does you have to work today?", "Verbo 'Have to'"]
+];
+
+
+        
+
+        // Variables globales
+        let preguntaActual = 0;
+        let respuestas = Array(preguntas.length).fill("");
+        let opcionesMezcladas = [];
+
+        // Elementos del DOM
+        const examCard = document.getElementById('exam-card');
+        const resultsCard = document.getElementById('results-card');
+        const topic = document.getElementById('topic');
+        const questionNumber = document.getElementById('question-number');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreElement = document.getElementById('score');
+        const percentageElement = document.getElementById('percentage');
+        const resultsProgressBar = document.getElementById('results-progress-bar');
+        const reviewContainer = document.getElementById('review-container');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Inicializar el examen
+        function inicializarExamen() {
+            // Mezclar las opciones para cada pregunta
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1, 5); // Todas las respuestas (correcta e incorrectas)
+                return [...opciones].sort(() => Math.random() - 0.5); // Mezclar opciones
+            });
+            
+            mostrarPregunta();
+            
+            // Event listeners
+            prevBtn.addEventListener('click', irPreguntaAnterior);
+            nextBtn.addEventListener('click', irPreguntaSiguiente);
+            restartBtn.addEventListener('click', reiniciarExamen);
+        }
+
+        // Mostrar la pregunta actual
+        function mostrarPregunta() {
+            // Obtener el tema de la pregunta
+            let tema = preguntas[preguntaActual][5];
+            if (tema == undefined) {
+            }
+            else {
+                topic.textContent = "Tema: " + tema;
+            }
+            // Actualizar número de pregunta y progreso
+            questionNumber.textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
+            const progreso = ((preguntaActual + 1) / preguntas.length) * 100; // Formula para sacar porcentaje 
+            progressText.textContent = `${Math.round(progreso)}% completado`;
+            progressBar.style.width = `${progreso}%`;
+            
+            // Mostrar texto de la pregunta
+            questionText.innerHTML = preguntas[preguntaActual][0];
+            
+            // Generar opciones
+            optionsContainer.innerHTML = '';
+            opcionesMezcladas[preguntaActual].forEach((opcion, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = `option ${respuestas[preguntaActual] === opcion ? 'selected' : ''}`;
+                optionDiv.dataset.value = opcion;
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" id="option-${index}" name="question-option" 
+                           ${respuestas[preguntaActual] === opcion ? 'checked' : ''}>
+                    <label for="option-${index}">${opcion}</label>
+                `;
+                
+                optionDiv.addEventListener('click', () => seleccionarOpcion(opcion));
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Actualizar estado de los botones
+            prevBtn.disabled = preguntaActual === 0;
+            nextBtn.disabled = !respuestas[preguntaActual];
+            
+            if (preguntaActual === preguntas.length - 1) {
+                nextBtn.textContent = 'Finalizar';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+
+        // Seleccionar una opción
+        function seleccionarOpcion(opcion) {
+            respuestas[preguntaActual] = opcion;
+            
+            // Actualizar UI
+            document.querySelectorAll('.option').forEach(el => {
+                el.classList.remove('selected');
+                if (el.dataset.value === opcion) {
+                    el.classList.add('selected');
+                    el.querySelector('input').checked = true;
+                }
+            });
+            
+            nextBtn.disabled = false;
+        }
+
+        // Ir a la pregunta anterior
+        function irPreguntaAnterior() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta();
+            }
+        }
+
+        // Ir a la siguiente pregunta
+        function irPreguntaSiguiente() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta();
+            } else {
+                mostrarResultados();
+            }
+        }
+
+        // Mostrar resultados
+        function mostrarResultados() {
+            examCard.style.display = 'none';
+            resultsCard.style.display = 'block';
+            
+            // Calcular puntuación
+            let puntos = 0;
+            respuestas.forEach((respuesta, index) => {
+                if (respuesta === preguntas[index][1]) {
+                    puntos++;
+                }
+            });
+            
+            const porcentaje = (puntos / preguntas.length) * 100;
+            
+            // Actualizar UI
+            scoreElement.textContent = `${puntos} / ${preguntas.length}`;
+            percentageElement.textContent = `${Math.round(porcentaje)}% de respuestas correctas`;
+            resultsProgressBar.style.width = `${porcentaje}%`;
+            
+            // Generar revisión de respuestas
+            reviewContainer.innerHTML = '';
+            preguntas.forEach((pregunta, index) => {
+                const esCorrecta = respuestas[index] === pregunta[1];
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                
+                reviewItem.innerHTML = `
+                    <div class="review-question">
+                        <span class="icon ${esCorrecta ? 'icon-check' : 'icon-x'}">
+                            ${esCorrecta ? '✓' : '✗'}
+                        </span>
+                        <span>${pregunta[0]}</span>
+                    </div>
+                    <div class="review-answer">
+                        Tu respuesta: <span class="${esCorrecta ? 'correct' : 'incorrect'}">
+                            ${respuestas[index] || 'Sin respuesta'}
+                        </span>
+                    </div>
+                    ${!esCorrecta ? `
+                        <div class="review-answer">
+                            Respuesta correcta: <span class="correct">${pregunta[1]}</span>
+                        </div>
+                    ` : ''}
+                `;
+                
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+        // Reiniciar examen
+        function reiniciarExamen() {
+            preguntaActual = 0;
+            respuestas = Array(preguntas.length).fill("");
+            
+            // Mezclar opciones nuevamente
+            opcionesMezcladas = preguntas.map(pregunta => {
+                const opciones = pregunta.slice(1);
+                return [...opciones].sort(() => Math.random() - 0.5);
+            });
+            
+            // Mostrar tarjeta de examen
+            examCard.style.display = 'block';
+            resultsCard.style.display = 'none';
+            
+            mostrarPregunta();
+        }
+
+       
+        
+        // Iniciar el examen cuando cargue la página
+        document.addEventListener('DOMContentLoaded', inicializarExamen);
+    </script>
+</body>
+</html>
+

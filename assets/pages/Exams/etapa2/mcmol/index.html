@@ -32,7 +32,8 @@
             
             <div class="card-footer">
                 <button class="btn btn-outline" id="prev-btn" disabled>Anterior</button>
-                <button class="btn " id="next-btn" disabled>Siguiente</button>
+                <button class="btn btn-primary" id="next-btn" disabled>Siguiente</button>
+                <button class="btn btn-primary" id="show-answer" disabled>Ayuda</button>
             </div>
         </div>
         
@@ -71,65 +72,7 @@
     <script> // evento extender imagen
     // Estructura de preguntas: [pregunta, respuesta correcta, respuesta incorrecta 1, 2, 3...]
     const preguntas = [
-        ["Esta clase del conflicto se basa en diferencias bien conocidas y entendidas entre intereses, opiniones, percepciones, e interpretaciones.", "Real", "Irreal", "Funcional", "Disfuincional" ,"Clases del conflicto."],
-        ["La percepcion es un proceso activo - constructivo en el que el perceptor construye un esquema informativo anticipatorio que le permite contrastar el estimulo y aceptarlo o rechazarlo segun se adecue o no a lo propuesto por el esquema. Responde Falso / Verdadero", "Verdadero", "Falso"],
-        ["¿Cuales son las caracteristicas de las emociones?", "\
-        <ul>\
-            <li>Son breves</li>\
-            <li>Son perturbaciones</li>\
-            <li>Se asocian a una exprecion facial</li>\
-            <li>Etcetera</li>\
-            </ul>\
-        ", "", "", "","Emociones y sentimientos"],
-        ["Son reacciones a un estimulo intenso o externo que conlleva a la expresion verbal o no verbal, positiva o negativa de la persona.", "Emociones", "", "", "", "Emociones y sentimiento"],
-        ["Conflicto sobre como debe hacerse el trabajo.", "Conflicto de Proceso", "Conflicto Funcional", "Conflicto de relacion", "Conflicto de tarea", "Tipos de conflicto en el ambito laboral."],
-        ["Conflicto basado en las relaciones interpersonales.", "Conflicto de relacion", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de tarea", "Tipos de conflicto en el ambito laboral."],
-        ["Conflicto sobre el contenido y metas del trabajo", "Conflicto de Tarea", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
-        ["Conflicto que dificulta el progreso del grupo..", "Conflicto Disfuncional", "Conflicto Funcional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
-        ["Conflicto que apoya las metas del grupo y mejora su desempeño.", "Conflicto Funcional", "Conflicto Disfuncional", "Conflicto de Proceso", "Conflicto de relacion", "Tipos de conflicto en el ambito laboral."],
-        ["Se manifiesta a traves de conductas. A esto se le llama conflicto..","Directo","Estructural","Cultural","", "Tipos de conflictos deacuerdo con el tipo de violencia."],
-        ["Se preesenta en las estructuras de las diversas organizaciones y es generado por las propias normas establecidas por la organizacion. A esto se le llama conflicto ..", "Estructual", "Directo", "Cultural", "", "Tipos de conflicto de acuerdo con el tipo de violencia."],
-        ["Hace referencia a la expresion ideologica del conflicto estructural, es decir, a la cultura interna de las organizaciones que justifican y preservan su estructura mediante codigos de comportamientos o actitudes. A esto se le llama conflicto..", "Cultural", "Estructural", "Directo", "", "Tipos de conflictos de acuerdo con el tipo de violencia."],
-        ["Son los que surgen entre personas que desempeñan funciones jerarquicamente distintas.", "Conflictos verticales.",  "", "", "", "", "Tipos de conflicto segun su jerarquia"],
-        ["Son aquellos que se presentan entre iguales.", "Conflictos horizontales.", "Conflictos", "", "", "", "Tipos de conflicto segun su jerarquia."],
-        ["Hacen referencia a las ideas, valores, conceptualizaciones y l acumulo de informacion y percepciones que contribuyen a dotarnos de un pensamiento determinado.", "Ideologicos", "Transicion", "Legitimidad", "", "Tipos de conflictos segun aspectos sociopoliticos."],
-        ["Son aquellos que se presentan en momentos de cambio politicoo de cualquier otro tipo, para establecer las luchas entre potencias rivales con la finalidad de que una de ellas se haga con el poder. Estamos hablando de..", "Transicion", "Ideologicos", "Legitimidad", "", "", "Tipos de conflictos segun aspectos sociopoliticos."],
-        ["Se refiere a aquellos que surgen como consecuencia de la falta de legitimidad, de la ausencia de participacion politica o de problemas en la distribucion del bienestar. Estamos hablando de..", "La Legitimidad", "La Transicion", "Ideologicos", "", "", "Tipos de conflictos segun sociopoliticos."],
-        ["Son aquellos donde las dos partes son identificadas y reconocen la existencia del conflicto, pero si no se lleva unprocedimiento de regulacion se puede producir una fuerte escalada. Estamos hablando de..", "Conflictos Emergentes", "Conflictos Latentes", "", "", "", "Tipos de conflicto segun su aparicion"],
-        ["Aquellos donde las tensiones basicas todavia no se han desarrollado por completo. Estamos hablando de..", "Conflictos Latentes", "Conflictos Emergentes", "", "", "", "Tipos de conflictos segun su aparicion."],
-        ["¿Cuales son los tipos de conflictos?", "\
-        <ul>\
-            <li>Intrapersonal</li>\
-            <li>interpersonal</li>\
-            <li>intragrupal</li>\
-            <li>intergrupal</li>\
-        </ul>\
-        ", "", "", "", "Tipos de conflicto"],
-        ["Hace referencia al enfrentamiento entre distintos grupos u organismos sociales en defensa de sus intereses en virtud del opuesto que ocupan en la estructura social.", "Conflicto social", "", "", "", "none"],
-        ["¿Cuales son las caracteristicas del conflicto?", "\
-        <ul>\
-            <li>Impreciso</li>\
-            <li>Inestable</li>\
-            <li>Inesperado</li>\
-            <li>Complejo</li>\
-            <li>Dinamico</li>\
-            <li>Genera cambio</li>\
-            <li>Conductual</li>\
-        </ul>\
-        ", "", "", "", "Caracteristicas del conflicto."],
-        ["¿Cuales son las etapas del conflicto?", "\
-        <ul>\
-            <li>Etapa 1 ( Conocimiento )</li>\
-            <li>Etapa 2 ( Diagnostico )</li>\
-            <li>Etapa 3 ( Reduccion )</li>\
-            <li>Etapa 4 ( Solucion )</li>\
-        </ul>\
-    ", "", "", "", "Etapas del conflicto"],
-        ["Segun Thomas. ¿Como define el el conflicto?", "Un proceso interactivo que como cualquier otro incluye las perceptiones, emociones, conductas y resultados de las partes intervinientes.", "", "", "", "Generalidades del conflicto."],
-        ["¿Cuales son los elementos del conflicto?", "Personas - Problema - Proceso", "", "", ""],
-        ["¿Que es el conflicto?","Es una situacion en la que dos o mas personas perciben que sus posiciones o intereses estan contrapuestos.", "Son las partes del conflicto, delimitan a quien le corresponde solventar o solucionar el conflicto.", "", "", "Generalidades del conflicto."],
-        ["Deriva del latin con- fictus, que a su vez proviene de confligere, que significa chocar, combatir, luchar o pelear. ¿Estamos hablando de?","Conflicto", "Proceso", "Lucha", "Confianza", "Generalidades del conflicto."],
-        ["","", "", "", "", ""],
+        ["Pregunta", "Respuesta Correcta", "Respuesta Eronea 1", "Respuesta Erronea 2", "Respuesta Erronea 3", "Tema"]
     ];
 
         
@@ -328,22 +271,3 @@
     </script>
 </body>
 </html>
-
-
-<!-- Temas etapa 2-->
-<!--
-    - Medidas estadisticas
-    - Medidas estadisticas en datos no agrupados
-    - Medidas estadisticas en datoa agrupados
-    - Medidas estadisticas en datoa no agrupados
-        - Medidas de variacion
-        - Rango
-        - Desvuacion media
-        - Varianza y desviacion estandar
-        - Coeficiente de variacion
-    - Medidas estadistica en datos agrupados
-        - Medidas de variacion
-        - Varianza y desviacion estandar
-        - 
-
--->
