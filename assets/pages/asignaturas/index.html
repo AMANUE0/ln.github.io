@@ -172,19 +172,6 @@
     </aside>
 
 
-<!--
-Examenes listos
-1- Probabilidad y Estadistica
-2- Solucion de conflictos
-3- Mi Conexion al mundo en otra lengua II
-Examenes primera semana
-Lunes: Probabilidad y Estadistica
-Martes: Solucion de conflictos
-Miercoles: Desarrollo Visual I
-Jueves: Robotica
-Viernes: Mi Conexion al mundo en otra lengua II    
-
--->
 
     <!--Contenido principal-->
     <main class="content">
@@ -194,7 +181,7 @@ Viernes: Mi Conexion al mundo en otra lengua II
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="contenedor-buscador">
-                    <input type="text" placeholder="Fuera de servicio" id="buscar" disabled>
+                    <input type="text" placeholder="Fuera de servicio" id="buscar">
                     <button class="buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
@@ -667,6 +654,30 @@ Viernes: Mi Conexion al mundo en otra lengua II
             document.body.classList.add("dark-mode");
             btnTheme.innerHTML = '<i class="fa-solid fa-sun"></i>';
     	}
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('search');
+    const examenes = document.querySelectorAll('.examen');
+
+    searchInput.addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+
+        examenes.forEach(function (examen) {
+            const nombreMateria = examen.querySelector('h3').textContent.toLowerCase();
+            const tags = Array.from(examen.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+
+            const coincideConNombre = nombreMateria.includes(searchTerm);
+            const coincideConTag = tags.some(tag => tag.includes(searchTerm));
+
+            if (coincideConNombre || coincideConTag) {
+                examen.style.display = '';
+            } else {
+                examen.style.display = 'none';
+            }
+        });
+    });
+});
+
     </script>
 </body>
 </html>

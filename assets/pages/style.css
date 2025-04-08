@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #444;
+    color: #f1f1f1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-x: hidden;
+}
+
+header {
+    background: linear-gradient(#222, #000);
+    color: #487bc7;
+    text-align: center;
+    padding: 30px;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+}
+
+header p {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #bbb;
+}
+
+.subjects {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+.subject-card {
+    background-color: #222;
+    border-radius: 12px;
+    padding: 80px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    color: #f1f1f1;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border: 2px solid transparent;
+}
+
+.subject-card img {
+    width: 100%;
+    max-width: 150px;
+    margin-bottom: 20px;
+   
+}
+
+.subject-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0px 30px black;
+    border-color: #4a90e2;
+}
+
+.content-section {
+    display: none;
+    padding: 40px;
+    background-color: #333;
+    border-radius: 12px;
+    margin: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.content-section:target {
+    display: block;
+}
+
+.content-section button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.content-section button:hover {
+    background-color: #0056b3;
+}
+
+.resources {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.resource h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.resource ul {
+    list-style: none;
+}
+
+.resource ul li {
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    font-size: 1rem;
+}
