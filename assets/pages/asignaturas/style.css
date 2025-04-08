@@ -557,6 +557,8 @@ footer {
 
 .examen-disponible {
     background-color: #0de10d; /* verde */
+    padding: 10px;
+    border-radius: 6px;
 }
 
 .examen-no-disponible, .examen-en-proceso {
