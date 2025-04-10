@@ -368,7 +368,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Examen medio termino</h1>
+        <h1>Examen segundo parcial</h1>
         <a href="../../../asignaturas/index.html" class="volver">Volver</a>
         <div class="card" id="exam-card">
             <div class="card-header">
@@ -431,8 +431,37 @@
     <script> // evento extender imagen
     // Estructura de preguntas: [pregunta, respuesta correcta, respuesta incorrecta 1, 2, 3...]
     const preguntas = [
-        ["Pregunta", "Respuesta correcta", "Respuesta incorrecta 1", "Respuesta incorrecta 2", "Respuesta incorrecta 3", "Tema"],
-    ];
+    ["La estructura ______ te permite ejecutar un bloque de código si una condición es verdadera.", "Condicional if", "Bucle for", "Clase abstracta", "Delegado", "Estructuras de control"],
+    ["Puedes usar __________ para manejar múltiples condiciones. Esto es útil en aplicaciones de Windows Forms para tomar decisiones basadas en la entrada del usuario o el estado de la aplicación.", "else if y else", "try catch", "for each", "do while", "Estructuras de control"],
+    ["Los ____ son esenciales para repetir acciones en tu aplicación.", "Bucles", "Condicionales", "Variables", "Métodos", "Estructuras de control"],
+    ["Puedes usar un bucle ___ para recorrer una lista de elementos y realizar una operación en cada uno de ellos.", "for", "if", "switch", "try", "Estructuras de control"],
+    ["Los bucles _________ te permiten repetir una acción mientras se cumpla una condición. Esto es útil en Windows Forms para actualizar la interfaz de usuario o procesar datos de manera iterativa.", "While y do-while", "if y else", "foreach y for", "try y catch", "Estructuras de control"],
+    ["Permite modificar el flujo de ejecución dentro de un bucle. Por ejemplo, 'break' se utiliza para salir de un bucle antes de que se complete, mientras que 'continue' se usa para omitir la iteración actual y pasar a la siguiente.", "Instrucciones de control de flujo.", "Métodos de clase", "Delegados", "Operadores lógicos", "Estructuras de control"],
+    ["¿Cuáles son las ventajas de usar List<T>?", "Flexibilidad dinámica, Métodos útiles, Indexación eficiente", "Memoria estática, Tipos fijos, Sin métodos", "Solo lectura, Inmutabilidad, Sin iteración", "No se puede agregar ni eliminar elementos", "Listas dinámicas"],
+    ["Este bucle se suele usar para iterar a través de los elementos de una lista.", "Bucle foreach", "Bucle switch", "Bucle do", "Condicional else", "Listas dinámicas"],
+    ["Es una implementación de lista dinámica que proporciona un conjunto de métodos y propiedades para trabajar con listas de elementos.", "List<T>", "Dictionary<TKey, TValue>", "ArrayList", "HashSet", "Listas dinámicas"],
+    ["Es el tipo de datos que la lista contendrá. Puede ser cualquier tipo de dato válido en C#, incluyendo tipos de valor y tipos de referencia.", "T", "List", "int[]", "var", "Listas dinámicas"],
+    ["Puedes agregar elementos a la lista utilizando el método...", "numeros.Add(1); 'método Add'", "numeros.Insert(1);", "numeros.Join(1);", "numeros.Set(1);", "Listas dinámicas"],
+    ["¿Cómo se acceden a los elementos en una lista?", "int primerNumero = numeros[0];", "numeros.get(0);", "numeros.at(0);", "numeros->0;", "Listas dinámicas"],
+    ["Esta propiedad devuelve el número de elementos en la lista.", "Propiedad Count", "Propiedad Length", "Propiedad Size", "Propiedad Total", "Listas dinámicas"],
+    ["Este método elimina la primera aparición de un elemento específico.", "Método Remove", "Método Delete", "Método Pop", "Método ClearItem", "Listas dinámicas"],
+    ["Esta propiedad verifica si un elemento está presente en la lista.", "Método Contains", "Método Exist", "Método HasItem", "Método FindElement", "Listas dinámicas"],
+    ["Este método elimina los elementos de una lista.", "Método Clear", "Método Flush", "Método Reset", "Método Wipe", "Listas dinámicas"],
+    ["Se utilizan ampliamente para controlar el comportamiento de la interfaz de usuario y la lógica de la aplicación.", "Condicionales", "Bucles infinitos", "Arrays", "Eventos", "Estructuras de control"],
+    ["Esta declaración permite ejecutar un bloque de código si una condición especificada es verdadera.", "if", "for", "return", "class", "Estructuras de control"],
+    ["Se usa después de un if para comprobar una condición adicional si la condición del if es falsa.", "else if", "switch", "try catch", "foreach", "Estructuras de control"],
+    ["Se utiliza para definir un bloque de código que se ejecutará si ninguna de las condiciones anteriores es verdadera.", "else", "default", "finally", "end", "Estructuras de control"],
+    ["Este bucle se utiliza cuando se conoce de antemano el número de iteraciones que se deben realizar. Este puede ser utilizado para recorrer los elementos de un arreglo en busca de información específica.", "Bucle for", "Bucle if", "Bucle while", "Bucle try", "Estructuras de control"],
+    ["Este bucle se ejecuta mientras se cumple una condición. La condición se evalúa antes de cada iteración, y si es verdadera, se ejecuta el bloque de código del bucle. Este bucle es útil cuando no se conoce de antemano cuántas iteraciones se realizarán, y el bucle continuará hasta que la condición sea falsa.", "Bucle while", "Bucle if", "Bucle for", "Bucle repeat", "Estructuras de control"],
+    ["Este bucle es similar al bucle while, pero garantiza que el bloque de código se ejecute al menos una vez antes de evaluar la condición. Esto es útil cuando se necesita realizar una acción inicial antes de verificar si se debe continuar ejecutando el bucle.", "Bucle do-while", "Bucle if", "Bucle until", "Bucle case", "Estructuras de control"],
+    ["En el contexto de aplicaciones de Windows Forms, estos bucles se pueden utilizar para tareas como:", "- Recorrer y manipular elementos en controles como listas o cuadros de texto<br>- Animar elementos gráficos en el formulario<br>- Esperar eventos específicos<br>- Procesar datos en segundo plano", "Actualizar eventos en línea", "Conectar con bases de datos", "Crear formularios dinámicos", "Estructuras de control"],
+    ["Es una estructura de control que facilita la iteración a través de elementos en una colección, como arrays, listas, diccionarios u otras estructuras de datos que implementan la interfaz IEnumerable.", "foreach", "if", "switch", "case", "Listas dinámicas"],
+    ["Sintaxis de foreach", "foreach (var elemento in coleccion) <br>{<br>//código para procesar cada elemento<br>}", "for (int i = 0; i < coleccion.Length; i++)", "switch (elemento)", "while (coleccion.hasNext())", "Listas dinámicas"],
+    ["No puedes modificar la colección mientras estás dentro del bucle.", "Solo lectura", "Modificable", "Destrucción segura", "Actualización automática", "Consideraciones importantes del foreach"],
+    ["Puedes usar foreach con tus propios tipos personalizados siempre que implementen la interfaz IEnumerable<T>", "Uso con Tipos Personalizados", "Solo para arrays", "Solo para listas nativas", "Solo para strings", "Consideraciones importantes del foreach"],
+    ["El rendimiento del bucle foreach es generalmente comparable a otros bucles, pero pueden haber pequeñas diferencias dependiendo del tipo de colección.", "Eficiencia", "Inestabilidad", "Inseguridad", "Baja compatibilidad", "Consideraciones importantes del foreach"],
+];
+
 
         
 
